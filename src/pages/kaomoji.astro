@@ -19,7 +19,7 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
       <p class="text-xs text-[var(--text-secondary)] mt-2">Kaomoji use standard Unicode characters and work on all social platforms. Some complex kaomoji may wrap incorrectly in SMS or plain-text emails. Click any kaomoji to copy it instantly.</p>
     </div>
     <!-- Category Tabs -->
-    <div id="kaomoji-tabs" class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide">
+    <div id="kaomoji-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide">
       {kaomojiCategories.map((cat, i) => (
         <button
           class:list={[
@@ -29,6 +29,8 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
               : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600',
           ]}
           data-category={cat.id}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
         >
           {cat.icon} {cat.name}
         </button>

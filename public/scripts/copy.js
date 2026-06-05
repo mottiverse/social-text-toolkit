@@ -4,6 +4,7 @@ window.copyToClipboard = async function (text) {
     await navigator.clipboard.writeText(text);
     window.showToast('Copied!');
     window.saveToHistory(text);
+    announceToScreenReader('Copied to clipboard');
     return true;
   } catch (err) {
     // Fallback for older browsers and non-HTTPS
@@ -18,15 +19,24 @@ window.copyToClipboard = async function (text) {
       document.execCommand('copy');
       window.showToast('Copied!');
       window.saveToHistory(text);
+      announceToScreenReader('Copied to clipboard');
       return true;
     } catch (e) {
       window.showToast('Failed to copy', true);
+      announceToScreenReader('Copy failed');
       return false;
     } finally {
       document.body.removeChild(textarea);
     }
   }
 };
+
+function announceToScreenReader(message) {
+  const announcer = document.getElementById('sr-announce');
+  if (announcer) {
+    announcer.textContent = message;
+  }
+}
 
 // Toast notification
 let toastTimer = null;

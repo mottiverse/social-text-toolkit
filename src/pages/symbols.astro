@@ -24,15 +24,19 @@ const categoriesJson = JSON.stringify(symbolCategories);
 
   <!-- Category Tabs -->
   <section class="px-4 pb-4">
-    <div id="category-tabs" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+    <div id="category-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
       <button
         class="tab-btn active whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all"
         data-category="all"
+        role="tab"
+        aria-selected="true"
       >All</button>
       {symbolCategories.map((cat) => (
         <button
           class="tab-btn whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 hover:text-brand-500 dark:hover:border-brand-600 dark:hover:text-brand-400 transition-all"
           data-category={cat.id}
+          role="tab"
+          aria-selected="false"
         >{cat.icon} {cat.name}</button>
       ))}
     </div>

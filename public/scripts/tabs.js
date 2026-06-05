@@ -1,5 +1,4 @@
-// Reusable category tab switching utility
-// Use: setupTabs('.tab-btn', categoryId => renderFunc(categoryId))
+// Reusable category tab switching utility with ARIA support
 
 window.setupCategoryTabs = function (selector, onCategoryChange) {
   const tabs = document.querySelectorAll(selector);
@@ -15,10 +14,17 @@ window.setupCategoryTabs = function (selector, onCategoryChange) {
         if (!t.classList.contains('border')) {
           t.classList.add(...inactiveClasses);
         }
+        t.setAttribute('aria-selected', 'false');
       });
       tab.classList.add(...activeClasses);
       tab.classList.remove(...inactiveClasses);
+      tab.setAttribute('aria-selected', 'true');
       onCategoryChange(tab.dataset.category);
     });
   });
+
+  // Set initial aria-selected on first tab
+  if (tabs.length > 0) {
+    tabs[0].setAttribute('aria-selected', 'true');
+  }
 };
