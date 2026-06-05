@@ -109,4 +109,4 @@ Pull requests are welcome! For major changes, please open an issue first.
 
 ---
 
-Built by [@mottiworkbuddy](https://github.com/mottiworkbuddy)
+Built by [@mottiverse](https://github.com/mottiverse)
