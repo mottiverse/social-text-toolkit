@@ -1,0 +1,87 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { upsideDownMap } from '../data/upside-down.js';
+---
+
+<ToolLayout
+  title="Upside Down Text Generator"
+  description="Flip your text upside down (uʍop ǝpısdn). Generate reversed Unicode characters for social media bios and creative messages. Free online tool."
+>
+  <div slot="tool">
+    <div class="mb-6">
+      <label for="text-input" class="block text-sm font-medium mb-2">Enter your text</label>
+      <textarea
+        id="text-input"
+        rows="4"
+        placeholder="Type something to flip..."
+        class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all resize-none text-lg"
+      ></textarea>
+    </div>
+
+    <!-- Platform note -->
+    <div class="mb-6 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Instagram</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ TikTok</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Discord</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Twitter/X</span>
+      </div>
+      <p class="text-xs text-[var(--text-secondary)] mt-1.5">Upside down text uses real Unicode characters. It works on all major social platforms. Characters without flip equivalents stay as-is.</p>
+    </div>
+
+    <!-- Result -->
+    <div id="result-card" class="tool-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-medium text-[var(--text-secondary)]">Flipped Text</span>
+      </div>
+      <div id="result-text" class="text-xl min-h-[2rem] break-all leading-relaxed select-all text-[var(--text-primary)]">uʍop ǝpısdn</div>
+      <div class="flex gap-2 mt-3">
+        <button id="copy-btn" class="btn-copy" disabled>Copy</button>
+        <button id="flip-back-btn" class="px-3 py-1.5 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-brand-500 hover:border-brand-300 dark:hover:border-brand-600 transition-all">Flip Back</button>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script define:vars={{ flipMap: upsideDownMap }}>
+  const input = document.getElementById('text-input');
+  const resultText = document.getElementById('result-text');
+  const copyBtn = document.getElementById('copy-btn');
+  const flipBackBtn = document.getElementById('flip-back-btn');
+
+  let currentFlipped = '';
+  let currentOriginal = '';
+
+  function flipText(text) {
+    let result = '';
+    for (let i = text.length - 1; i >= 0; i--) {
+      const ch = text[i];
+      result += flipMap[ch] || ch;
+    }
+    return result;
+  }
+
+  function updateResult() {
+    currentOriginal = input.value;
+    currentFlipped = flipText(currentOriginal);
+    resultText.textContent = currentFlipped || 'uʍop ǝpısdn';
+    copyBtn.disabled = !currentOriginal;
+  }
+
+  flipBackBtn.addEventListener('click', () => {
+    const flipped = flipText(resultText.textContent);
+    input.value = flipped;
+    currentOriginal = flipped;
+    currentFlipped = resultText.textContent;
+    updateResult();
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (window.copyToClipboard && currentFlipped) {
+      window.copyToClipboard(currentFlipped);
+    }
+  });
+
+  input.addEventListener('input', updateResult);
+  input.focus();
+</script>
