@@ -24,7 +24,16 @@ const categoriesJson = JSON.stringify(symbolCategories);
 
   <!-- Category Tabs -->
   <section class="px-4 pb-4">
-    <div id="category-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+    <!-- Platform quick filter -->
+    <div class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all" data-platform="all">All</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="ig">📸 IG</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="tt">🎵 TikTok</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="dc">💬 Discord</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="x">𝕏 X</button>
+    </div>
+    <p id="platform-note" class="text-[11px] text-[var(--text-secondary)] mt-1 hidden">All symbols use standard Unicode and work on all platforms. Some emoji rendering may differ by platform.</p>
+    <div id="category-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide mt-1">
       <button
         class="tab-btn active whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all"
         data-category="all"
@@ -54,6 +63,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
 <script define:vars={{ categoriesJson }}>
   const categories = JSON.parse(categoriesJson);
   let activeCategory = 'all';
+  let activePlatform = 'all';
   let allSymbols = [];
 
   const searchInput = document.getElementById('search-input');
@@ -162,4 +172,21 @@ const categoriesJson = JSON.stringify(symbolCategories);
   // Initialize
   buildSymbolList();
   renderBatch(0, BATCH_SIZE);
+
+  // Platform filter buttons
+  const platformNote = document.getElementById('platform-note');
+  document.querySelectorAll('.platform-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activePlatform = btn.dataset.platform;
+      document.querySelectorAll('.platform-filter-btn').forEach(b => {
+        b.classList.remove('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+        if (!b.classList.contains('border')) {
+          b.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+        }
+      });
+      btn.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+      btn.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      platformNote.classList.toggle('hidden', activePlatform === 'all');
+    });
+  });
 </script>

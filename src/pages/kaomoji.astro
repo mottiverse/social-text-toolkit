@@ -18,6 +18,18 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
       </div>
       <p class="text-xs text-[var(--text-secondary)] mt-2">Kaomoji use standard Unicode characters and work on all social platforms. Some complex kaomoji may wrap incorrectly in SMS or plain-text emails. Click any kaomoji to copy it instantly.</p>
     </div>
+    <!-- Search -->
+    <div class="mb-6">
+      <div class="relative">
+        <input
+          id="kaomoji-search"
+          type="text"
+          placeholder="Search kaomoji..."
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 text-sm transition-all"
+        />
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+    </div>
     <!-- Category Tabs -->
     <div id="kaomoji-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide">
       {kaomojiCategories.map((cat, i) => (
@@ -49,33 +61,56 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
 <script define:vars={{ categoriesJson }}>
   const categories = JSON.parse(categoriesJson);
   const grid = document.getElementById('kaomoji-grid');
+  const searchInput = document.getElementById('kaomoji-search');
   let activeCategory = categories[0]?.id || 'happy';
 
   function renderCategory(catId) {
     const cat = categories.find(c => c.id === catId);
     if (!cat) return;
+    const query = searchInput.value.toLowerCase().trim();
+
     grid.innerHTML = '';
     const fragment = document.createDocumentFragment();
     for (const kao of cat.kaomoji) {
+      if (query && !kao.toLowerCase().includes(query)) continue;
+
       const btn = document.createElement('button');
-      btn.className = 'tool-card text-center py-4 hover:border-brand-300 dark:hover:border-brand-600 group';
+      btn.className = 'tool-card text-center py-4 hover:border-brand-300 dark:hover:border-brand-600 group relative';
       btn.dataset.copy = kao;
-      btn.innerHTML = '<span class="text-xl block mb-1">' + kao + '</span><span class="text-xs text-[var(--text-secondary)] opacity-0 group-hover:opacity-100 transition-opacity">Click to copy</span>';
+      btn.innerHTML = '<span class="text-xl block mb-1">' + kao + '</span><span class="text-xs text-[var(--text-secondary)] opacity-0 group-hover:opacity-100 transition-opacity">Click to copy</span>' +
+        '<span class="absolute top-2 right-2 text-sm cursor-pointer hover:scale-125 transition-transform" data-fav="' + kao.replace(/"/g, '&quot;') + '" title="Toggle favorite">⭐</span>';
       fragment.appendChild(btn);
     }
     grid.appendChild(fragment);
+
+    if (!fragment.children.length) {
+      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8">No kaomoji found</p>';
+    }
   }
 
-  // Event delegation for copy
+  // Event delegation for copy and favorites
   grid.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-copy]');
-    if (btn && window.copyToClipboard) {
-      window.copyToClipboard(btn.dataset.copy);
+    const favBtn = e.target.closest('[data-fav]');
+    if (favBtn) {
+      e.stopPropagation();
+      if (window.toggleFavorite) {
+        const isFav = window.toggleFavorite(favBtn.getAttribute('data-fav'));
+        favBtn.textContent = isFav ? '🌟' : '⭐';
+      }
+      return;
+    }
+    const copyBtn = e.target.closest('[data-copy]');
+    if (copyBtn && window.copyToClipboard) {
+      window.copyToClipboard(copyBtn.dataset.copy);
     }
   });
 
+  // Search
+  searchInput.addEventListener('input', () => renderCategory(activeCategory));
+
   setupCategoryTabs('.kao-tab', (category) => {
     activeCategory = category;
+    searchInput.value = '';
     renderCategory(category);
   });
 
