@@ -1,0 +1,187 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { templates, fontOptions, bgPresets } from '../data/image-templates.js';
+
+const templatesJson = JSON.stringify(templates);
+const fontsJson = JSON.stringify(fontOptions);
+const bgJson = JSON.stringify(bgPresets);
+---
+
+<ToolLayout
+  title="Text to Image Generator"
+  description="Convert text into social media images. Choose templates for Instagram Story, Twitter Card, Pinterest Pin and more. Free Canvas-based tool, no upload needed."
+>
+  <div slot="tool">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Controls -->
+      <div class="space-y-4">
+        <!-- Template selection -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Template</label>
+          <div id="template-buttons" class="flex flex-wrap gap-2">
+            {templates.map((t, i) => (
+              <button
+                class:list={[
+                  'template-btn px-3 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap',
+                  i === 0 ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900' : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600',
+                ]}
+                data-id={t.id}
+                data-w={t.width}
+                data-h={t.height}
+              >{t.icon} {t.name}</button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Text input -->
+        <div>
+          <label for="text-input" class="block text-sm font-medium mb-2">Your text</label>
+          <textarea
+            id="text-input"
+            rows="4"
+            placeholder="Enter text to render..."
+            class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all resize-none"
+          >✨ Hello World ✨</textarea>
+        </div>
+
+        <!-- Font size -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Font Size: <span id="size-label">48</span>px</label>
+          <input id="font-size-slider" type="range" min="16" max="120" value="48" class="w-full accent-brand-500" />
+        </div>
+
+        <!-- Background -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Background</label>
+          <div id="bg-buttons" class="flex flex-wrap gap-2">
+            {bgPresets.map((bg, i) => (
+              <button
+                class:list={[
+                  'bg-btn px-3 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap',
+                  i === 0 ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900' : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600',
+                ]}
+                data-id={bg.id}
+              >{bg.name}</button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Download -->
+        <button id="download-btn" class="btn-copy">Download PNG</button>
+      </div>
+
+      <!-- Preview -->
+      <div>
+        <label class="block text-sm font-medium mb-2">Preview</label>
+        <div class="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] overflow-hidden">
+          <canvas id="preview-canvas" class="w-full h-auto"></canvas>
+        </div>
+        <p id="size-info" class="text-xs text-[var(--text-secondary)] mt-1 text-center">1080 × 1920</p>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script define:vars={{ templatesJson, fontsJson, bgJson }}>
+  const templates = JSON.parse(templatesJson);
+  const fontOptions = JSON.parse(fontsJson);
+  const bgPresets = JSON.parse(bgJson);
+
+  const canvas = document.getElementById('preview-canvas');
+  const ctx = canvas.getContext('2d');
+  const textInput = document.getElementById('text-input');
+  const fontSizeSlider = document.getElementById('font-size-slider');
+  const sizeLabel = document.getElementById('size-label');
+  const sizeInfo = document.getElementById('size-info');
+  const downloadBtn = document.getElementById('download-btn');
+
+  let currentTemplate = templates[0];
+  let currentBg = bgPresets[0];
+  let currentFontSize = 48;
+
+  function setCanvasSize() {
+    canvas.width = currentTemplate.width;
+    canvas.height = currentTemplate.height;
+  }
+
+  function drawGradient(colors) {
+    if (colors.length === 1) {
+      ctx.fillStyle = colors[0];
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    colors.forEach((c, i) => gradient.addColorStop(i / (colors.length - 1), c));
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function render() {
+    setCanvasSize();
+    drawGradient(currentBg.colors);
+
+    const text = textInput.value.trim() || '✨';
+    const lines = text.split('\n');
+
+    ctx.fillStyle = currentBg.id === 'solid-white' ? '#111827' : '#ffffff';
+    ctx.font = currentFontSize + 'px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const lineHeight = currentFontSize * 1.4;
+    const totalHeight = lines.length * lineHeight;
+    const startY = (canvas.height - totalHeight) / 2 + lineHeight / 2;
+
+    lines.forEach((line, i) => {
+      ctx.fillText(line, canvas.width / 2, startY + i * lineHeight);
+    });
+
+    sizeInfo.textContent = currentTemplate.width + ' × ' + currentTemplate.height;
+  }
+
+  // Template buttons
+  document.querySelectorAll('.template-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentTemplate = templates.find(t => t.id === btn.dataset.id) || templates[0];
+      document.querySelectorAll('.template-btn').forEach(b => {
+        b.classList.remove('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+        if (!b.classList.contains('border')) b.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      });
+      btn.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+      btn.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      render();
+    });
+  });
+
+  // Background buttons
+  document.querySelectorAll('.bg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentBg = bgPresets.find(b => b.id === btn.dataset.id) || bgPresets[0];
+      document.querySelectorAll('.bg-btn').forEach(b => {
+        b.classList.remove('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+        if (!b.classList.contains('border')) b.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      });
+      btn.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+      btn.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      render();
+    });
+  });
+
+  fontSizeSlider.addEventListener('input', () => {
+    currentFontSize = parseInt(fontSizeSlider.value);
+    sizeLabel.textContent = currentFontSize;
+    render();
+  });
+
+  textInput.addEventListener('input', render);
+
+  downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'text-to-image.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    if (window.showToast) window.showToast('Image downloaded!');
+  });
+
+  render();
+</script>
