@@ -11,6 +11,15 @@ const categoriesJson = JSON.stringify(dividerCategories);
 >
   <!-- Category Tabs -->
   <section class="px-4 pb-4">
+    <div class="mb-4 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Instagram</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ TikTok</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Discord</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Twitter/X</span>
+      </div>
+      <p class="text-xs text-[var(--text-secondary)] mt-1.5">Text dividers use Unicode box-drawing and decorative characters. They render correctly on all major social platforms. Some multi-line dividers may appear differently on mobile.</p>
+    </div>
     <div id="category-tabs" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
       <button
         class="tab-btn active whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all"

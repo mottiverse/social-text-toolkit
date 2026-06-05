@@ -51,29 +51,33 @@ const { title, description } = Astro.props;
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
       <div class="space-y-3">
-        <details class="tool-card cursor-pointer group">
-          <summary class="font-semibold list-none flex items-center justify-between">
-            What platforms do these styles work on?
-            <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </summary>
-          <p class="text-sm text-[var(--text-secondary)] mt-2">Most styles work on Instagram, TikTok, Discord, Twitter/X, and YouTube. Some styles may show as squares on certain platforms — check the compatibility tags on each style.</p>
-        </details>
-        <details class="tool-card cursor-pointer group">
-          <summary class="font-semibold list-none flex items-center justify-between">
-            Is this free to use?
-            <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </summary>
-          <p class="text-sm text-[var(--text-secondary)] mt-2">Yes! All tools on Social Text Toolkit are completely free. No sign-up required.</p>
-        </details>
-        <details class="tool-card cursor-pointer group">
-          <summary class="font-semibold list-none flex items-center justify-between">
-            Will these work in my username?
-            <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </summary>
-          <p class="text-sm text-[var(--text-secondary)] mt-2">Some platforms allow fancy text in usernames, but many don't. Check each platform's rules. We show character limits to help you stay within bounds.</p>
-        </details>
-      </div>
-    </section>
+        {Astro.slots.has('faq') ? (
+          <slot name="faq" />
+        ) : (
+          <>
+            <details class="tool-card cursor-pointer group">
+              <summary class="font-semibold list-none flex items-center justify-between">
+                What platforms do these styles work on?
+                <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </summary>
+              <p class="text-sm text-[var(--text-secondary)] mt-2">Most styles work on Instagram, TikTok, Discord, Twitter/X, and YouTube. Some styles may show as squares on certain platforms — check the compatibility tags on each style.</p>
+            </details>
+            <details class="tool-card cursor-pointer group">
+              <summary class="font-semibold list-none flex items-center justify-between">
+                Is this free to use?
+                <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </summary>
+              <p class="text-sm text-[var(--text-secondary)] mt-2">Yes! All tools on Social Text Toolkit are completely free. No sign-up required.</p>
+            </details>
+            <details class="tool-card cursor-pointer group">
+              <summary class="font-semibold list-none flex items-center justify-between">
+                Will these work in my username?
+                <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </summary>
+              <p class="text-sm text-[var(--text-secondary)] mt-2">Some platforms allow fancy text in usernames, but many don't. Check each platform's rules. We show character limits to help you stay within bounds.</p>
+            </details>
+          </>
+        )}
 
     <!-- Related Tools -->
     <section>

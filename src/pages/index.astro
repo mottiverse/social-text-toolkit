@@ -7,7 +7,7 @@ import { symbolCategories } from '../data/symbols.js';
 const popularCategories = symbolCategories.slice(0, 4);
 ---
 
-<BaseLayout title="Social Text Toolkit" description="Make your social profiles stand out with fancy text, symbols, kaomoji, dividers, and more. Free online tools for Instagram, TikTok, Discord, and Twitter.">
+<BaseLayout title="Social Text Toolkit" description="Free online text generator, symbol library, invisible characters, kaomoji &amp; bio decorations for social media creators. Create aesthetic profiles on Instagram, TikTok, Discord.">
   <!-- Hero Section -->
   <section class="px-4 pt-8 pb-6 text-center">
     <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
@@ -15,6 +15,9 @@ const popularCategories = symbolCategories.slice(0, 4);
     </h1>
     <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-xl mx-auto mb-6">
       Make your social profiles stand out with fancy text, symbols &amp; decorations.
+    </p>
+    <p class="text-sm text-[var(--text-secondary)] max-w-2xl mx-auto mb-6 leading-relaxed">
+      A free, privacy-first collection of online text tools for social media creators. Generate fancy Unicode fonts, browse 1000+ copy-paste symbols, explore Japanese kaomoji emoticons, and preview your bio across Instagram, TikTok, Discord, and more — all in one place, with no ads and no tracking.
     </p>
     <div class="max-w-md mx-auto flex gap-2">
       <input
@@ -140,6 +143,17 @@ const popularCategories = symbolCategories.slice(0, 4);
       ))}
     </div>
   </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    'name': 'Social Text Toolkit',
+    'url': 'https://example.com',
+    'description': 'Free online text generator, symbol library, invisible characters, kaomoji & bio decorations for social media creators.',
+    'applicationCategory': 'UtilitiesApplication',
+    'operatingSystem': 'All',
+    'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+  })} />
 </BaseLayout>
 
 <script>
