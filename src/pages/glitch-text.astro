@@ -1,0 +1,143 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { intensityLevels } from '../data/zalgo.js';
+
+const levelsForClient = intensityLevels;
+---
+
+<ToolLayout
+  title="Glitch / Zalgo Text Generator"
+  description="Create corrupted, glitchy text effects with Zalgo combining characters. Adjust intensity from light to extreme. Free online tool for creative profiles."
+>
+  <div slot="tool">
+    <div class="mb-6">
+      <label for="text-input" class="block text-sm font-medium mb-2">Enter your text</label>
+      <textarea
+        id="text-input"
+        rows="3"
+        placeholder="Type something to corrupt..."
+        class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all resize-none text-lg"
+      ></textarea>
+    </div>
+
+    <!-- Intensity Slider -->
+    <div class="mb-6 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <label class="block text-sm font-medium mb-3">Intensity</label>
+      <div id="intensity-buttons" class="flex flex-wrap gap-2">
+        {intensityLevels.map((level, i) => (
+          <button
+            class:list={[
+              'intensity-btn px-4 py-2 rounded-full text-sm font-medium border transition-all',
+              i === 1
+                ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900'
+                : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600',
+            ]}
+            data-level={level.id}
+          >{level.name}</button>
+        ))}
+      </div>
+      <p class="text-xs text-[var(--text-secondary)] mt-2">
+        <span id="level-desc">{intensityLevels[1].name}</span>:
+        <span id="level-detail" class="ml-1">{(intensityLevels[1] as any).above} above, {(intensityLevels[1] as any).below} below marks per character</span>
+      </p>
+    </div>
+
+    <!-- Platform warning -->
+    <div class="mb-6 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Discord</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">⚠ Instagram</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">⚠ TikTok</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">✗ Twitter/X</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">✗ SMS</span>
+      </div>
+      <p class="text-xs text-[var(--text-secondary)] mt-1.5">Zalgo text works best on Discord. Heavy and Extreme levels may display incorrectly on most platforms. Twitter/X strips combining marks entirely.</p>
+    </div>
+
+    <!-- Result -->
+    <div id="result-card" class="tool-card">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-medium text-[var(--text-secondary)]">Glitched Text</span>
+        <button id="regenerate-btn" class="text-xs text-brand-500 hover:text-brand-600 dark:text-brand-400 transition-colors">↻ Regenerate</button>
+      </div>
+      <div id="result-text" class="text-xl min-h-[3rem] break-all leading-relaxed text-[var(--text-primary)] overflow-hidden" style="line-height: 2.5;">Start typing to see glitch effects</div>
+      <button id="copy-btn" class="btn-copy mt-3" disabled>Copy</button>
+    </div>
+  </div>
+</ToolLayout>
+
+<script define:vars={{ levels: levelsForClient }}>
+  // Inline zalgo logic since we can't import ESM in inline scripts
+  const marksAbove = ['\u0300','\u0301','\u0302','\u0303','\u0304','\u0305','\u0306','\u0307','\u0308','\u0309','\u030A','\u030B','\u030C','\u030D','\u030E','\u030F','\u0310','\u0311','\u0312','\u0313','\u0314','\u0315','\u0334','\u0335','\u0336','\u0337','\u0338','\u035B','\u035C','\u035D','\u035E'];
+  const marksBelow = ['\u0316','\u0317','\u0318','\u0319','\u031A','\u031B','\u031C','\u031D','\u031E','\u031F','\u0320','\u0321','\u0322','\u0323','\u0324','\u0325','\u0326','\u0327','\u0328','\u0329','\u032A','\u032B','\u032C','\u032D','\u032E','\u032F','\u0330','\u0331','\u0332','\u0333'];
+  const marksThrough = ['\u0339','\u033A','\u033B','\u033C','\u033D','\u033E','\u033F','\u0340','\u0341','\u0342','\u0343','\u0344','\u0345','\u0346','\u0347','\u0348','\u0349','\u034A','\u034B','\u034C','\u034D'];
+
+  function randomMarks(arr, count) {
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      result.push(arr[Math.floor(Math.random() * arr.length)]);
+    }
+    return result;
+  }
+
+  function zalgoText(text, intensity) {
+    const level = levels.find(l => l.id === intensity) || levels[0];
+    let result = '';
+    for (const ch of text) {
+      if (ch === ' ' || ch === '\n') { result += ch; continue; }
+      result += ch + randomMarks(marksAbove, level.above).join('') + randomMarks(marksThrough, level.through).join('') + randomMarks(marksBelow, level.below).join('');
+    }
+    return result;
+  }
+
+  const input = document.getElementById('text-input');
+  const resultText = document.getElementById('result-text');
+  const copyBtn = document.getElementById('copy-btn');
+  const regenerateBtn = document.getElementById('regenerate-btn');
+  const levelDesc = document.getElementById('level-desc');
+  const levelDetail = document.getElementById('level-detail');
+  let currentLevel = 'medium';
+
+  function updateResult() {
+    if (!input.value) {
+      resultText.textContent = 'Start typing to see glitch effects';
+      copyBtn.disabled = true;
+      return;
+    }
+    const zalgo = zalgoText(input.value, currentLevel);
+    resultText.textContent = zalgo;
+    copyBtn.disabled = false;
+  }
+
+  function updateIntensityUI(levelId) {
+    const level = levels.find(l => l.id === levelId) || levels[0];
+    levelDesc.textContent = level.name;
+    levelDetail.textContent = level.above + ' above, ' + level.below + ' below marks per character';
+  }
+
+  document.querySelectorAll('.intensity-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentLevel = btn.dataset.level;
+      updateIntensityUI(currentLevel);
+      // Update button styles via tabs utility
+      document.querySelectorAll('.intensity-btn').forEach(b => {
+        b.classList.remove('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+        if (!b.classList.contains('border')) {
+          b.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+        }
+      });
+      btn.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+      btn.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      updateResult();
+    });
+  });
+
+  input.addEventListener('input', updateResult);
+  regenerateBtn.addEventListener('click', updateResult);
+  copyBtn.addEventListener('click', () => {
+    if (window.copyToClipboard && resultText.textContent) {
+      window.copyToClipboard(resultText.textContent);
+    }
+  });
+  input.focus();
+</script>
