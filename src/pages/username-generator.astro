@@ -1,0 +1,146 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { platforms } from '../data/platforms.js';
+---
+
+<ToolLayout
+  title="Username Generator"
+  description="Generate aesthetic usernames for Instagram, TikTok, Discord, Twitter/X and more. Check character limits and copy instantly. Free online tool."
+>
+  <div slot="tool">
+    <div class="mb-6">
+      <label for="keyword-input" class="block text-sm font-medium mb-2">Enter a keyword</label>
+      <input
+        id="keyword-input"
+        type="text"
+        placeholder="e.g. starlight, cosmic, shadow..."
+        class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all text-lg"
+        maxlength="30"
+      />
+    </div>
+
+    <!-- Platform limit hints -->
+    <div id="platform-limits" class="hidden mb-6 grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)]">
+        <span class="text-xs">IG:</span>
+        <span id="limit-ig" class="font-mono text-[var(--text-secondary)]">0/30</span>
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)]">
+        <span class="text-xs">TT:</span>
+        <span id="limit-tt" class="font-mono text-[var(--text-secondary)]">0/24</span>
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)]">
+        <span class="text-xs">DC:</span>
+        <span id="limit-dc" class="font-mono text-[var(--text-secondary)]">0/32</span>
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)]">
+        <span class="text-xs">X:</span>
+        <span id="limit-x" class="font-mono text-[var(--text-secondary)]">0/50</span>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="results" class="space-y-3">
+      <p class="text-[var(--text-secondary)] text-center py-8">Enter a keyword to generate username ideas</p>
+    </div>
+  </div>
+</ToolLayout>
+
+<script>
+  const input = document.getElementById('keyword-input');
+  const results = document.getElementById('results');
+  const platformLimits = document.getElementById('platform-limits');
+
+  // Decoration strategies
+  const decorators = [
+    { name: 'Dot Separator', fn: (w) => w.split('').join('.') },
+    { name: 'Underscore Wrap', fn: (w) => '_' + w + '_' },
+    { name: 'Tilde Prefix', fn: (w) => '~' + w },
+    { name: 'Star Decorated', fn: (w) => '★' + w + '★' },
+    { name: 'Arrow Suffix', fn: (w) => w + '↗' },
+    { name: 'Heart Prefix', fn: (w) => '♡' + w },
+    { name: 'Sparkle Around', fn: (w) => '✨' + w + '✨' },
+    { name: 'Dash Separator', fn: (w) => w.split('').join('-') },
+    { name: 'Crown Prefix', fn: (w) => '♛' + w },
+    { name: 'Moon Decorated', fn: (w) => '☾' + w + '☽' },
+    { name: 'Parentheses', fn: (w) => '(' + w + ')' },
+    { name: 'Double Arrow', fn: (w) => '»' + w + '«' },
+  ];
+
+  const suffixes = ['x', 'xoxo', 'v2', '_', '01', 'xx', 'real', 'official', 'here', 'irl'];
+
+  function generate(keyword) {
+    const variants = [];
+
+    // Apply each decorator
+    for (const d of decorators) {
+      variants.push({ text: d.fn(keyword), label: d.name });
+    }
+
+    // Suffix variants
+    for (const s of suffixes) {
+      variants.push({ text: keyword + s, label: 'With ' + s });
+    }
+
+    // Mixed: decorator + suffix
+    variants.push({ text: '♡' + keyword + '.x', label: 'Heart + .x' });
+    variants.push({ text: '~' + keyword + '_irl', label: 'Tilde + _irl' });
+    variants.push({ text: '★' + keyword + 'xoxo', label: 'Star + xoxo' });
+
+    // Number replacements (leet-style)
+    const leet = keyword.replace(/o/gi, '0').replace(/e/gi, '3').replace(/a/gi, '4').replace(/i/gi, '1').replace(/s/gi, '5');
+    if (leet !== keyword) {
+      variants.push({ text: leet, label: 'Leet Style' });
+    }
+
+    return variants;
+  }
+
+  function updateResults() {
+    const keyword = input.value.trim();
+    platformLimits.classList.toggle('hidden', !keyword);
+
+    if (!keyword) {
+      results.innerHTML = '<p class="text-[var(--text-secondary)] text-center py-8">Enter a keyword to generate username ideas</p>';
+      updateLimits(0);
+      return;
+    }
+
+    const variants = generate(keyword);
+    const len = [...keyword].length;
+    updateLimits(len);
+
+    let html = '';
+    for (const v of variants) {
+      const totalLen = [...v.text].length;
+      html += '<div class="tool-card flex items-center justify-between gap-3">' +
+        '<div class="flex-1 min-w-0">' +
+          '<span class="text-[var(--text-primary)] font-medium select-all">' + v.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>' +
+          '<span class="text-xs text-[var(--text-secondary)] ml-2">' + v.label + '</span>' +
+          '<span class="text-xs text-[var(--text-secondary)] ml-1">(' + totalLen + ' chars)</span>' +
+        '</div>' +
+        '<button class="btn-copy shrink-0" data-copy-text="' + v.text.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">Copy</button>' +
+      '</div>';
+    }
+
+    results.innerHTML = html;
+    results.querySelectorAll('[data-copy-text]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.copyToClipboard) window.copyToClipboard(btn.getAttribute('data-copy-text'));
+      });
+    });
+  }
+
+  function updateLimits(len) {
+    const limits = { ig: 30, tt: 24, dc: 32, x: 50 };
+    for (const [key, limit] of Object.entries(limits)) {
+      const el = document.getElementById('limit-' + key);
+      if (!el) continue;
+      el.textContent = len + '/' + limit;
+      el.className = 'font-mono' + (len > limit ? ' text-red-500 font-bold' : '');
+    }
+  }
+
+  input.addEventListener('input', updateResults);
+  input.focus();
+</script>
