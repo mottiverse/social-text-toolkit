@@ -21,16 +21,19 @@ const popularCategories = symbolCategories.slice(0, 4);
     </p>
     <div class="max-w-md mx-auto flex gap-2">
       <input
+        id="hero-search"
         type="text"
-        placeholder="Type something..."
+        placeholder="Search tools, symbols, kaomoji..."
         class="flex-1 px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all"
       />
       <button
+        id="hero-search-btn"
         class="px-5 py-3 rounded-xl bg-brand-500 text-white font-medium hover:bg-brand-600 active:scale-95 dark:bg-brand-400 dark:text-gray-900 dark:hover:bg-brand-300 transition-all"
       >
         Go
       </button>
     </div>
+    <div id="search-results" class="hidden max-w-2xl mx-auto mt-4 text-left"></div>
   </section>
 
   <!-- Popular Tools -->
@@ -166,4 +169,84 @@ const popularCategories = symbolCategories.slice(0, 4);
       if (window.copyToClipboard) window.copyToClipboard(text);
     });
   });
+</script>
+
+<script define:vars={{ categoriesJson: JSON.stringify(symbolCategories) }}>
+  // Search index for homepage
+  const symbolCategories = JSON.parse(categoriesJson);
+
+  const toolPages = [
+    { name: 'Fancy Text Generator', keywords: 'fancy text font style unicode bold italic script fraktur', url: '/fancy-text-generator', icon: '✨' },
+    { name: 'Symbol Library', keywords: 'symbols hearts stars arrows aesthetic bio decoration', url: '/symbols', icon: '💎' },
+    { name: 'Kaomoji Collection', keywords: 'kaomoji emoticon japanese happy sad cute love angry', url: '/kaomoji', icon: '(◕‿◕)' },
+    { name: 'Text Dividers', keywords: 'divider separator bio line decoration', url: '/text-dividers', icon: '───' },
+    { name: 'Invisible Character', keywords: 'invisible zero-width space blank empty copy', url: '/invisible-character', icon: '⠀' },
+    { name: 'Bio Preview', keywords: 'bio preview instagram tiktok discord profile check', url: '/bio-preview', icon: '📱' },
+    { name: 'Small Text', keywords: 'small tiny superscript subscript caps', url: '/small-text', icon: '↑' },
+    { name: 'Upside Down Text', keywords: 'upside down flip reverse inverted', url: '/upside-down-text', icon: '↕' },
+    { name: 'Glitch Text', keywords: 'glitch zalgo corrupt creepy scary distorted', url: '/glitch-text', icon: '⚡' },
+    { name: 'Username Generator', keywords: 'username generator name aesthetic nick', url: '/username-generator', icon: '👤' },
+  ];
+
+  const searchInput = document.getElementById('hero-search');
+  const searchBtn = document.getElementById('hero-search-btn');
+  const searchResults = document.getElementById('search-results');
+
+  function search(query) {
+    const q = query.toLowerCase().trim();
+    if (!q) { searchResults.classList.add('hidden'); return; }
+
+    // Find matching tools
+    const toolMatches = toolPages.filter(t =>
+      t.name.toLowerCase().includes(q) || t.keywords.includes(q)
+    );
+
+    // Find matching symbols
+    const symbolMatches = [];
+    for (const cat of symbolCategories) {
+      if (!cat.name.toLowerCase().includes(q) && !cat.id.includes(q)) continue;
+      const chars = cat.symbols.slice(0, 5).map(s => typeof s === 'string' ? s : s.char);
+      for (const ch of chars) {
+        symbolMatches.push({ char: ch, category: cat.name, categoryId: cat.id });
+      }
+    }
+
+    if (!toolMatches.length && !symbolMatches.length) {
+      searchResults.classList.remove('hidden');
+      searchResults.innerHTML = '<p class="text-sm text-[var(--text-secondary)] text-center py-4">No results found for "' + query + '"</p>';
+      return;
+    }
+
+    let html = '';
+
+    if (toolMatches.length) {
+      html += '<h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">Tools</h3><div class="space-y-2 mb-4">';
+      for (const tool of toolMatches) {
+        html += '<a href="' + tool.url + '" class="flex items-center gap-3 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-300 dark:hover:border-brand-600 transition-all"><span class="text-xl">' + tool.icon + '</span><span class="font-medium text-[var(--text-primary)]">' + tool.name + '</span><svg class="w-4 h-4 text-[var(--text-secondary)] ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>';
+      }
+      html += '</div>';
+    }
+
+    if (symbolMatches.length) {
+      html += '<h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">Symbols</h3><div class="flex flex-wrap gap-2 mb-2">';
+      for (const sym of symbolMatches) {
+        html += '<button class="symbol-item text-xl" data-copy="' + sym.char + '" title="Copy ' + sym.category + '" aria-label="Copy symbol">' + sym.char + '</button>';
+      }
+      html += '<a href="/symbols" class="inline-block text-xs text-brand-500 hover:text-brand-600 dark:text-brand-400 mt-1">View all →</a></div>';
+    }
+
+    searchResults.innerHTML = html;
+    searchResults.classList.remove('hidden');
+
+    // Attach copy handlers
+    searchResults.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.copyToClipboard) window.copyToClipboard(btn.getAttribute('data-copy'));
+      });
+    });
+  }
+
+  searchBtn.addEventListener('click', () => search(searchInput.value));
+  searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') search(searchInput.value); });
+  searchInput.addEventListener('input', () => { if (searchInput.value.length >= 2) search(searchInput.value); else searchResults.classList.add('hidden'); });
 </script>
