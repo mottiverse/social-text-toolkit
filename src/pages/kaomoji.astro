@@ -29,12 +29,11 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
     </div>
 
     <!-- Data store -->
-    <script set:html={`window.__kaomojiData = ${categoriesJson};`} />
   </div>
 </ToolLayout>
 
-<script>
-  const categories = window.__kaomojiData || [];
+<script define:vars={{ categoriesJson }}>
+  const categories = JSON.parse(categoriesJson);
   const grid = document.getElementById('kaomoji-grid');
   const tabs = document.querySelectorAll('.kao-tab');
   let activeCategory = categories[0]?.id || 'happy';
