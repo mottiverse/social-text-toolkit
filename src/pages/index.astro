@@ -86,14 +86,17 @@ const popularCategories = symbolCategories.slice(0, 4);
             {cat.icon} {cat.name}
           </h3>
           <div class="flex flex-wrap gap-2">
-            {cat.symbols.slice(0, 12).map((sym) => (
-              <button
-                class="w-10 h-10 flex items-center justify-center text-lg rounded-lg hover:bg-brand-100 dark:hover:bg-brand-900/30 active:scale-95 transition-all cursor-pointer"
-                data-copy={sym}
-              >
-                {sym}
-              </button>
-            ))}
+            {cat.symbols.slice(0, 12).map((sym) => {
+              const ch = typeof sym === 'string' ? sym : sym.char;
+              return (
+                <button
+                  class="w-10 h-10 flex items-center justify-center text-lg rounded-lg hover:bg-brand-100 dark:hover:bg-brand-900/30 active:scale-95 transition-all cursor-pointer"
+                  data-copy={ch}
+                >
+                  {ch}
+                </button>
+              );
+            })}
           </div>
         </div>
       ))}

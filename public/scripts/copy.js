@@ -70,7 +70,14 @@ window.saveToHistory = function (text) {
     if (history.length > 20) history.pop();
     localStorage.setItem('copyHistory', JSON.stringify(history));
   } catch (e) {
-    // localStorage not available
+    // localStorage full or unavailable — clear oldest entries and retry
+    if (e.name === 'QuotaExceededError') {
+      try {
+        const history = JSON.parse(localStorage.getItem('copyHistory') || '[]');
+        history.splice(-5); // remove 5 oldest
+        localStorage.setItem('copyHistory', JSON.stringify(history));
+      } catch (e2) { /* localStorage broken */ }
+    }
   }
 };
 

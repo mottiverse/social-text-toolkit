@@ -29,5 +29,12 @@ const { title, description } = Astro.props;
     <MobileNav />
     <script is:inline src="/scripts/copy.js"></script>
     <script is:inline src="/scripts/favorites.js"></script>
+    <script is:inline>
+      // Global error boundary — prevent white screen from JS errors
+      window.addEventListener('error', function(e) {
+        console.error('Global error:', e.message, e.filename, e.lineno);
+        // Don't block the page — error is logged, user can continue
+      });
+    </script>
   </body>
 </html>

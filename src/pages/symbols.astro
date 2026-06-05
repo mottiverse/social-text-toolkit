@@ -68,9 +68,10 @@ const categoriesJson = JSON.stringify(symbolCategories);
     allSymbols = [];
     for (const cat of categories) {
       for (const sym of cat.symbols) {
-        if (!seen.has(sym)) {
-          seen.add(sym);
-          allSymbols.push({ symbol: sym, categoryId: cat.id });
+        const ch = sym.char || sym; // backward compat with string format
+        if (!seen.has(ch)) {
+          seen.add(ch);
+          allSymbols.push({ symbol: ch, id: sym.id || ch, categoryId: cat.id });
         }
       }
     }

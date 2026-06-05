@@ -3,6 +3,8 @@ window.getFavorites = function () {
   try {
     return JSON.parse(localStorage.getItem('favorites') || '[]');
   } catch (e) {
+    // Corrupted data — reset
+    localStorage.removeItem('favorites');
     return [];
   }
 };
@@ -21,8 +23,16 @@ window.toggleFavorite = function (text) {
     favorites.unshift(text);
     window.showToast('Added to favorites');
   }
-  localStorage.setItem('favorites', JSON.stringify(favorites));
-  return idx === -1; // returns true if added
+  try {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  } catch (e) {
+    if (e.name === 'QuotaExceededError') {
+      window.showToast('Storage full — removed oldest favorites', true);
+      favorites.splice(-5);
+      try { localStorage.setItem('favorites', JSON.stringify(favorites)); } catch (e2) {}
+    }
+  }
+  return idx === -1;
 };
 
 window.removeFavorite = function (text) {
@@ -30,6 +40,10 @@ window.removeFavorite = function (text) {
   const idx = favorites.indexOf(text);
   if (idx > -1) {
     favorites.splice(idx, 1);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    try {
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    } catch (e) {
+      // Silently fail — data is already removed from memory
+    }
   }
 };
