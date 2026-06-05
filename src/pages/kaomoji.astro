@@ -55,14 +55,24 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
     const cat = categories.find(c => c.id === catId);
     if (!cat) return;
     grid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     for (const kao of cat.kaomoji) {
       const btn = document.createElement('button');
       btn.className = 'tool-card text-center py-4 hover:border-brand-300 dark:hover:border-brand-600 group';
+      btn.dataset.copy = kao;
       btn.innerHTML = '<span class="text-xl block mb-1">' + kao + '</span><span class="text-xs text-[var(--text-secondary)] opacity-0 group-hover:opacity-100 transition-opacity">Click to copy</span>';
-      btn.onclick = function() { copyToClipboard(kao); };
-      grid.appendChild(btn);
+      fragment.appendChild(btn);
     }
+    grid.appendChild(fragment);
   }
+
+  // Event delegation for copy
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-copy]');
+    if (btn && window.copyToClipboard) {
+      window.copyToClipboard(btn.dataset.copy);
+    }
+  });
 
   setupCategoryTabs('.kao-tab', (category) => {
     activeCategory = category;

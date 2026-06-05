@@ -54,60 +54,111 @@ const categoriesJson = JSON.stringify(symbolCategories);
 <script define:vars={{ categoriesJson }}>
   const categories = JSON.parse(categoriesJson);
   let activeCategory = 'all';
+  let allSymbols = [];
 
   const searchInput = document.getElementById('search-input');
   const symbolGrid = document.getElementById('symbol-grid');
   const noResults = document.getElementById('no-results');
+  const BATCH_SIZE = 60;
+  let renderedCount = 0;
 
-  function renderSymbols() {
-    const query = searchInput.value.toLowerCase().trim();
-
-    const matchedCategories = categories.filter(cat => {
-      if (activeCategory !== 'all' && cat.id !== activeCategory) return false;
-      return true;
-    });
-
-    const allSymbols = [];
-    for (const cat of matchedCategories) {
+  // Precompute unique symbols once
+  function buildSymbolList() {
+    const seen = new Set();
+    allSymbols = [];
+    for (const cat of categories) {
       for (const sym of cat.symbols) {
-        allSymbols.push({ symbol: sym, category: cat.name });
+        if (!seen.has(sym)) {
+          seen.add(sym);
+          allSymbols.push({ symbol: sym, categoryId: cat.id });
+        }
       }
     }
-
-    // Remove duplicates
-    const seen = new Set();
-    const unique = allSymbols.filter(item => {
-      const key = item.symbol;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-
-    symbolGrid.innerHTML = unique.map(item => `
-      <button
-        class="symbol-item"
-        data-copy="${item.symbol}"
-        title="Copy ${item.category}"
-      >${item.symbol}</button>
-    `).join('');
-
-    noResults.classList.toggle('hidden', unique.length > 0);
-
-    // Attach copy handlers
-    symbolGrid.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (window.copyToClipboard) {
-          window.copyToClipboard(btn.getAttribute('data-copy'));
-        }
-      });
-    });
   }
+
+  // Create DOM element for a symbol
+  function createSymbolEl(item) {
+    const btn = document.createElement('button');
+    btn.className = 'symbol-item';
+    btn.dataset.copy = item.symbol;
+    btn.dataset.category = item.categoryId;
+    btn.title = 'Copy symbol';
+    btn.setAttribute('aria-label', 'Copy symbol ' + item.symbol);
+    btn.textContent = item.symbol;
+    return btn;
+  }
+
+  // Render batch of symbols
+  function renderBatch(start, count) {
+    const fragment = document.createDocumentFragment();
+    const end = Math.min(start + count, allSymbols.length);
+    for (let i = start; i < end; i++) {
+      fragment.appendChild(createSymbolEl(allSymbols[i]));
+    }
+    symbolGrid.appendChild(fragment);
+    renderedCount = end;
+  }
+
+  // Filter visible symbols by category and search
+  function applyFilters() {
+    const query = searchInput.value.toLowerCase().trim();
+
+    let visible = 0;
+    for (const el of symbolGrid.children) {
+      const inCategory = activeCategory === 'all' || el.dataset.category === activeCategory;
+      const matchesSearch = !query || el.textContent.toLowerCase().includes(query);
+      const show = inCategory && matchesSearch;
+      el.classList.toggle('hidden', !show);
+      if (show) visible++;
+    }
+
+    noResults.classList.toggle('hidden', visible > 0);
+    return visible;
+  }
+
+  // Event delegation for symbol clicks
+  symbolGrid.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-copy]');
+    if (btn && window.copyToClipboard) {
+      window.copyToClipboard(btn.dataset.copy);
+    }
+  });
+
+  // Lazy load more on scroll
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && renderedCount < allSymbols.length) {
+      renderBatch(renderedCount, BATCH_SIZE);
+      applyFilters();
+    }
+  }, { rootMargin: '200px' });
+
+  // Sentinel element for scroll detection
+  const sentinel = document.createElement('div');
+  sentinel.className = 'h-1';
+  symbolGrid.after(sentinel);
+  observer.observe(sentinel);
+
+  // Re-observe sentinel after re-renders
+  function recheckSentinel() {
+    observer.unobserve(sentinel);
+    sentinel.remove();
+    symbolGrid.after(sentinel);
+    observer.observe(sentinel);
+  }
+
+  // Debounced search
+  let searchTimer;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => applyFilters(), 50);
+  });
 
   setupCategoryTabs('.tab-btn', (category) => {
     activeCategory = category;
-    renderSymbols();
+    applyFilters();
   });
 
-  searchInput.addEventListener('input', renderSymbols);
-  renderSymbols();
+  // Initialize
+  buildSymbolList();
+  renderBatch(0, BATCH_SIZE);
 </script>
