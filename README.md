@@ -58,18 +58,9 @@ npm run build
 npm run preview
 ```
 
-## Deploy to Cloudflare Pages
+## Live Demo
 
-1. Push this repo to GitHub
-2. Log in to [Cloudflare Pages](https://pages.cloudflare.com)
-3. Click **Create a project** → **Connect to Git**
-4. Select this repo, set:
-   - **Framework preset**: Astro
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-5. Click **Save and Deploy**
-
-The site will be available at `https://<project-name>.pages.dev` for free.
+Coming soon.
 
 ## Tools Overview
 
@@ -88,16 +79,6 @@ The site will be available at `https://<project-name>.pages.dev` for free.
 - [ ] Upside Down Text
 - [ ] Glitch / Zalgo Text
 - [ ] Username Generator
-- [ ] SEO blog section (for AdSense readiness)
-- [ ] Legal pages (Privacy Policy / Terms)
-
-## AdSense Roadmap
-
-To qualify for Google AdSense:
-- [ ] 30+ pages of quality content
-- [ ] SEO-optimized blog section
-- [ ] Privacy Policy + Terms + Contact page
-- [ ] Consistent traffic for 5-6 months before applying
 
 ## License
 
