@@ -1,0 +1,85 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { smallTextStyles, smallTextMaps } from '../data/small-text.js';
+
+const stylesForClient = smallTextStyles.map(s => ({ id: s.id, name: s.name, icon: s.icon }));
+---
+
+<ToolLayout
+  title="Small Text Generator"
+  description="Generate superscript (ˢᵘᵖᵉʳˢᶜʳᶦᵖᵗ), subscript (ₛᵤbₛcᵣᵢₚₜ), and small caps (ꜱᴍᴀʟʟ ᴄᴀᴘꜱ) text styles. Free online tool for social media bios."
+>
+  <div slot="tool">
+    <div class="mb-6">
+      <label for="text-input" class="block text-sm font-medium mb-2">Enter your text</label>
+      <textarea
+        id="text-input"
+        rows="3"
+        placeholder="Type something here..."
+        class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all resize-none text-lg"
+      ></textarea>
+    </div>
+
+    <!-- Platform note -->
+    <div class="mb-6 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Instagram</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ TikTok</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Discord</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Twitter/X</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">⚠ LinkedIn</span>
+      </div>
+      <p class="text-xs text-[var(--text-secondary)] mt-1.5">Small text styles use Unicode characters. Superscript and subscript have limited character coverage — letters without mappings stay unchanged. Small caps cover full alphabet.</p>
+    </div>
+
+    <!-- Results -->
+    <div id="results" class="space-y-3">
+      <p class="text-[var(--text-secondary)] text-center py-8">Start typing above to see small text styles</p>
+    </div>
+  </div>
+</ToolLayout>
+
+<script define:vars={{ styles: stylesForClient, maps: smallTextMaps }}>
+  const input = document.getElementById('text-input');
+  const results = document.getElementById('results');
+
+  function convertText(text, fontMap) {
+    let result = '';
+    for (const char of text) {
+      result += fontMap[char] || char;
+    }
+    return result;
+  }
+
+  function renderResults(text) {
+    if (!text) {
+      results.innerHTML = '<p class="text-[var(--text-secondary)] text-center py-8">Start typing above to see small text styles</p>';
+      return;
+    }
+
+    let html = '';
+    for (const style of styles) {
+      const map = maps[style.id] || {};
+      const converted = convertText(text, map);
+
+      html += '<div class="tool-card">' +
+        '<div class="flex items-center justify-between mb-2">' +
+          '<span class="text-sm font-medium text-[var(--text-secondary)]">' + style.name + ' <span class="text-xs text-[var(--text-secondary)] opacity-60">' + style.icon + '</span></span>' +
+        '</div>' +
+        '<div class="text-xl mb-3 break-all leading-relaxed select-all">' + converted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
+        '<button class="btn-copy" data-copy-text="' + converted.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">Copy</button>' +
+      '</div>';
+    }
+
+    results.innerHTML = html;
+
+    results.querySelectorAll('[data-copy-text]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.copyToClipboard) window.copyToClipboard(btn.getAttribute('data-copy-text'));
+      });
+    });
+  }
+
+  input.addEventListener('input', (e) => renderResults(e.target.value));
+  input.focus();
+</script>
