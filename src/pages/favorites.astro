@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Favorites - Social Text Toolkit" description="Your saved symbols, kaomoji, and text styles. Access your frequently used items in one place.">
+  <div class="mx-auto max-w-2xl px-4 py-8">
+    <h1 class="text-2xl font-bold mb-2 text-[var(--text-primary)]">Favorites</h1>
+    <p class="text-sm text-[var(--text-secondary)] mb-8">Your saved symbols and text items. Click to copy, or remove items you no longer need.</p>
+
+    <div id="favorites-list" class="space-y-3">
+      <p id="empty-state" class="text-center text-[var(--text-secondary)] py-12">
+        No favorites yet. Browse <a href="/symbols" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">symbols</a> or <a href="/kaomoji" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">kaomoji</a> and click ⭐ to save them here.
+      </p>
+    </div>
+
+    <div id="bulk-actions" class="hidden mt-6 flex gap-2 justify-center">
+      <button id="copy-all-btn" class="btn-copy">Copy All</button>
+      <button id="clear-all-btn" class="px-4 py-2 rounded-lg border border-[var(--border-color)] text-sm font-medium text-[var(--text-secondary)] hover:text-red-500 hover:border-red-300 dark:hover:border-red-600 transition-all">Clear All</button>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const list = document.getElementById('favorites-list');
+  const emptyState = document.getElementById('empty-state');
+  const bulkActions = document.getElementById('bulk-actions');
+  const copyAllBtn = document.getElementById('copy-all-btn');
+  const clearAllBtn = document.getElementById('clear-all-btn');
+
+  function render() {
+    const favorites = window.getFavorites ? window.getFavorites() : [];
+    const hasItems = favorites.length > 0;
+
+    emptyState.classList.toggle('hidden', hasItems);
+    bulkActions.classList.toggle('hidden', !hasItems);
+
+    if (!hasItems) {
+      list.querySelectorAll('.fav-item').forEach(el => el.remove());
+      return;
+    }
+
+    // Remove existing items
+    list.querySelectorAll('.fav-item').forEach(el => el.remove());
+
+    // Render items after empty state
+    favorites.forEach((text, index) => {
+      const display = text.length > 60 ? text.slice(0, 60) + '...' : text;
+      const item = document.createElement('div');
+      item.className = 'fav-item tool-card flex items-center justify-between gap-3';
+      item.innerHTML = `
+        <span class="text-sm text-[var(--text-primary)] break-all select-all flex-1 min-w-0">${display.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
+        <div class="flex gap-1.5 shrink-0">
+          <button class="btn-copy" data-copy>Copy</button>
+          <button class="px-3 py-1.5 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-red-500 hover:border-red-300 dark:hover:border-red-600 transition-all" data-remove aria-label="Remove from favorites">✕</button>
+        </div>
+      `;
+
+      item.querySelector('[data-copy]').addEventListener('click', () => {
+        if (window.copyToClipboard) window.copyToClipboard(text);
+      });
+
+      item.querySelector('[data-remove]').addEventListener('click', () => {
+        if (window.removeFavorite) {
+          window.removeFavorite(text);
+          render();
+        }
+      });
+
+      emptyState.insertAdjacentElement('afterend', item);
+    });
+  }
+
+  copyAllBtn.addEventListener('click', () => {
+    const favorites = window.getFavorites ? window.getFavorites() : [];
+    if (favorites.length && window.copyToClipboard) {
+      window.copyToClipboard(favorites.join('\n'));
+    }
+  });
+
+  clearAllBtn.addEventListener('click', () => {
+    if (confirm('Remove all favorites?')) {
+      localStorage.setItem('favorites', '[]');
+      render();
+    }
+  });
+
+  render();
+</script>

@@ -18,7 +18,7 @@ const tabs = [
         <a
           href={tab.href}
           class:list={[
-            'flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs transition-colors',
+            'relative flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs transition-colors',
             isActive
               ? 'text-brand-500 dark:text-brand-400'
               : 'text-[var(--text-secondary)] hover:text-brand-500 dark:hover:text-brand-400',
@@ -26,8 +26,21 @@ const tabs = [
         >
           <span class="text-lg leading-none">{tab.icon}</span>
           <span class="font-medium">{tab.label}</span>
+          {tab.href === '/favorites' && <span id="fav-badge" class="absolute -top-0.5 -right-1 min-w-[1.125rem] h-[1.125rem] flex items-center justify-center rounded-full bg-brand-500 text-white text-[10px] font-bold px-1 hidden">0</span>}
         </a>
       );
     })}
   </div>
 </nav>
+
+<script>
+  // Update favorites badge count
+  const badge = document.getElementById('fav-badge');
+  if (badge) {
+    const count = window.getFavorites ? window.getFavorites().length : 0;
+    if (count > 0) {
+      badge.textContent = count > 99 ? '99+' : count;
+      badge.classList.remove('hidden');
+    }
+  }
+</script>
