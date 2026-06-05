@@ -1,0 +1,35 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'Social Text Toolkit - Fancy Text, Symbols & Bio Decorations',
+  description = 'Make your social profiles stand out with fancy text generators, aesthetic symbols, kaomoji, and bio decorations. Free online tools with platform compatibility.',
+  canonical,
+} = Astro.props;
+const siteUrl = 'https://example.com';
+const canonicalUrl = canonical || Astro.url.href;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />

@@ -1,0 +1,121 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { symbolCategories } from '../data/symbols.js';
+
+const categoriesJson = JSON.stringify(symbolCategories);
+---
+
+<ToolLayout
+  title="Symbol Library"
+  description="Browse and copy 1000+ aesthetic symbols for your social media bios, captions, and messages. Hearts, stars, arrows, flowers, and more."
+>
+  <!-- Search Bar -->
+  <section class="px-4 pb-4">
+    <div class="relative">
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search symbols..."
+        class="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all"
+      />
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    </div>
+  </section>
+
+  <!-- Category Tabs -->
+  <section class="px-4 pb-4">
+    <div id="category-tabs" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <button
+        class="tab-btn active whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all"
+        data-category="all"
+      >All</button>
+      {symbolCategories.map((cat) => (
+        <button
+          class="tab-btn whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 hover:text-brand-500 dark:hover:border-brand-600 dark:hover:text-brand-400 transition-all"
+          data-category={cat.id}
+        >{cat.icon} {cat.name}</button>
+      ))}
+    </div>
+  </section>
+
+  <!-- Symbol Grid -->
+  <section class="px-4 pb-8">
+    <div id="symbol-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-2">
+    </div>
+    <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden">No symbols found</p>
+  </section>
+</ToolLayout>
+
+<script define:vars={{ categoriesJson }}>
+  const categories = JSON.parse(categoriesJson);
+  let activeCategory = 'all';
+
+  const searchInput = document.getElementById('search-input');
+  const symbolGrid = document.getElementById('symbol-grid');
+  const noResults = document.getElementById('no-results');
+
+  function renderSymbols() {
+    const query = searchInput.value.toLowerCase().trim();
+
+    const matchedCategories = categories.filter(cat => {
+      if (activeCategory !== 'all' && cat.id !== activeCategory) return false;
+      return true;
+    });
+
+    const allSymbols = [];
+    for (const cat of matchedCategories) {
+      for (const sym of cat.symbols) {
+        allSymbols.push({ symbol: sym, category: cat.name });
+      }
+    }
+
+    // Remove duplicates
+    const seen = new Set();
+    const unique = allSymbols.filter(item => {
+      const key = item.symbol;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    symbolGrid.innerHTML = unique.map(item => `
+      <button
+        class="symbol-item"
+        data-copy="${item.symbol}"
+        title="Copy ${item.category}"
+      >${item.symbol}</button>
+    `).join('');
+
+    noResults.classList.toggle('hidden', unique.length > 0);
+
+    // Attach copy handlers
+    symbolGrid.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.copyToClipboard) {
+          window.copyToClipboard(btn.getAttribute('data-copy'));
+        }
+      });
+    });
+  }
+
+  // Tab click handlers
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.className = b.className.replace(/bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900/g, '').trim();
+        if (!b.classList.contains('border')) {
+          b.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+        }
+      });
+      btn.classList.add('active');
+      btn.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
+      btn.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+      activeCategory = btn.dataset.category;
+      renderSymbols();
+    });
+  });
+
+  searchInput.addEventListener('input', renderSymbols);
+  renderSymbols();
+</script>

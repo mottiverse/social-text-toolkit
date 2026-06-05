@@ -1,0 +1,121 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { platforms } from '../data/platforms.js';
+
+const platformEntries = Object.entries(platforms);
+const platformsJson = JSON.stringify(platforms);
+---
+
+<ToolLayout
+  title="Bio Preview Tool"
+  description="Preview how your bio text will look on Instagram, TikTok, Discord, Twitter/X, LinkedIn, and YouTube. Check character limits in real-time."
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-8">
+    <!-- Input Area -->
+    <div>
+      <h2 class="text-lg font-bold text-[var(--text-primary)] mb-3">Your Bio</h2>
+      <textarea
+        id="bio-input"
+        rows="6"
+        maxlength="1000"
+        placeholder="Type your bio text here..."
+        class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 resize-none transition-all"
+      ></textarea>
+      <p id="global-count" class="text-xs text-[var(--text-secondary)] mt-2">0 characters</p>
+    </div>
+
+    <!-- Preview Area -->
+    <div>
+      <h2 class="text-lg font-bold text-[var(--text-primary)] mb-3">Preview</h2>
+
+      <!-- Platform Tabs -->
+      <div id="platform-tabs" class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+        {platformEntries.map(([key, p], i) => (
+          <button
+            class="platform-tab whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${i === 0 ? 'bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900' : 'border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300'}"
+            data-platform={key}
+          >{p.icon} {p.name}</button>
+        ))}
+      </div>
+
+      <!-- Preview Card -->
+      <div id="preview-card" class="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] overflow-hidden">
+        <!-- Platform Header -->
+        <div id="preview-header" class="px-4 py-3 border-b border-[var(--border-color)] flex items-center gap-2">
+          <span id="preview-icon" class="text-lg">{platforms.instagram.icon}</span>
+          <span id="preview-name" class="font-semibold text-sm text-[var(--text-primary)]">{platforms.instagram.name}</span>
+        </div>
+        <!-- Bio Content -->
+        <div class="px-4 py-4">
+          <p id="preview-bio" class="text-sm text-[var(--text-primary)] whitespace-pre-wrap break-words leading-relaxed min-h-[60px]">Your bio will appear here...</p>
+        </div>
+        <!-- Character Count -->
+        <div class="px-4 py-2 border-t border-[var(--border-color)] flex justify-between items-center">
+          <span id="char-limit" class="text-xs text-[var(--text-secondary)]">0 / 150</span>
+          <span id="char-warning" class="text-xs text-red-500 hidden">Over character limit!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ToolLayout>
+
+<script define:vars={{ platformsJson }}>
+  const platforms = JSON.parse(platformsJson);
+  let activePlatform = 'instagram';
+
+  const bioInput = document.getElementById('bio-input');
+  const globalCount = document.getElementById('global-count');
+  const previewBio = document.getElementById('preview-bio');
+  const previewIcon = document.getElementById('preview-icon');
+  const previewName = document.getElementById('preview-name');
+  const charLimit = document.getElementById('char-limit');
+  const charWarning = document.getElementById('char-warning');
+
+  function updatePreview() {
+    const text = bioInput.value;
+    globalCount.textContent = `${text.length} characters`;
+    previewBio.textContent = text || 'Your bio will appear here...';
+
+    const platform = platforms[activePlatform];
+    const limit = platform.bioLimit || 1000;
+    charLimit.textContent = `${text.length} / ${limit}`;
+
+    if (text.length > limit) {
+      charLimit.classList.add('text-red-500');
+      charLimit.classList.remove('text-[var(--text-secondary)]');
+      charWarning.classList.remove('hidden');
+    } else {
+      charLimit.classList.remove('text-red-500');
+      charLimit.classList.add('text-[var(--text-secondary)]');
+      charWarning.classList.add('hidden');
+    }
+  }
+
+  function switchPlatform(platformKey) {
+    activePlatform = platformKey;
+    const platform = platforms[platformKey];
+
+    previewIcon.textContent = platform.icon;
+    previewName.textContent = platform.name;
+
+    // Update tab styles
+    document.querySelectorAll('.platform-tab').forEach(tab => {
+      if (tab.dataset.platform === platformKey) {
+        tab.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+        tab.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]', 'hover:border-brand-300');
+      } else {
+        tab.classList.remove('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
+        tab.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]', 'hover:border-brand-300');
+      }
+    });
+
+    updatePreview();
+  }
+
+  document.querySelectorAll('.platform-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchPlatform(tab.dataset.platform));
+  });
+
+  bioInput.addEventListener('input', updatePreview);
+  updatePreview();
+</script>

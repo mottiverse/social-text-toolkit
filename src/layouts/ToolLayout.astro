@@ -1,0 +1,97 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PlatformTag from '../components/PlatformTag.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={`${title} - Social Text Toolkit`} description={description}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <!-- Tool Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+      {description && (
+        <p class="text-lg text-[var(--text-secondary)]">{description}</p>
+      )}
+    </div>
+
+    <!-- Tool Content -->
+    <div class="mb-12">
+      <slot name="tool" />
+    </div>
+
+    <!-- How to Use -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">How to Use</h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="tool-card">
+          <div class="text-2xl mb-2">1️⃣</div>
+          <h3 class="font-semibold mb-1">Type Your Text</h3>
+          <p class="text-sm text-[var(--text-secondary)]">Enter your text in the input area above.</p>
+        </div>
+        <div class="tool-card">
+          <div class="text-2xl mb-2">2️⃣</div>
+          <h3 class="font-semibold mb-1">Choose a Style</h3>
+          <p class="text-sm text-[var(--text-secondary)]">Browse through different styles and pick your favorite.</p>
+        </div>
+        <div class="tool-card">
+          <div class="text-2xl mb-2">3️⃣</div>
+          <h3 class="font-semibold mb-1">Copy & Paste</h3>
+          <p class="text-sm text-[var(--text-secondary)]">Click copy, then paste into your social media profile.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        <details class="tool-card cursor-pointer group">
+          <summary class="font-semibold list-none flex items-center justify-between">
+            What platforms do these styles work on?
+            <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </summary>
+          <p class="text-sm text-[var(--text-secondary)] mt-2">Most styles work on Instagram, TikTok, Discord, Twitter/X, and YouTube. Some styles may show as squares on certain platforms — check the compatibility tags on each style.</p>
+        </details>
+        <details class="tool-card cursor-pointer group">
+          <summary class="font-semibold list-none flex items-center justify-between">
+            Is this free to use?
+            <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </summary>
+          <p class="text-sm text-[var(--text-secondary)] mt-2">Yes! All tools on Social Text Toolkit are completely free. No sign-up required.</p>
+        </details>
+        <details class="tool-card cursor-pointer group">
+          <summary class="font-semibold list-none flex items-center justify-between">
+            Will these work in my username?
+            <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </summary>
+          <p class="text-sm text-[var(--text-secondary)] mt-2">Some platforms allow fancy text in usernames, but many don't. Check each platform's rules. We show character limits to help you stay within bounds.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Related Tools -->
+    <section>
+      <h2 class="text-2xl font-bold mb-4">Related Tools</h2>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <a href="/fancy-text-generator" class="tool-card">
+          <span class="text-xl">✨</span>
+          <span class="font-medium ml-2">Fancy Text Generator</span>
+        </a>
+        <a href="/symbols" class="tool-card">
+          <span class="text-xl">💎</span>
+          <span class="font-medium ml-2">Symbol Library</span>
+        </a>
+        <a href="/kaomoji" class="tool-card">
+          <span class="text-xl">(◕‿◕)</span>
+          <span class="font-medium ml-2">Kaomoji Collection</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

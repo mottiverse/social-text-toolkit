@@ -1,0 +1,33 @@
+---
+const currentPath = Astro.url.pathname;
+const tabs = [
+  { href: '/', label: 'Home', icon: '🏠' },
+  { href: '/fancy-text-generator', label: 'Tools', icon: '🔧' },
+  { href: '/symbols', label: 'Symbols', icon: '✨' },
+  { href: '/favorites', label: 'Favorites', icon: '⭐' },
+];
+---
+
+<nav class="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-[var(--border-color)] bg-[var(--bg-primary)]/95 backdrop-blur-lg" style="padding-bottom: env(safe-area-inset-bottom)">
+  <div class="flex items-center justify-around h-14">
+    {tabs.map((tab) => {
+      const isActive = tab.href === '/'
+        ? currentPath === '/'
+        : currentPath.startsWith(tab.href);
+      return (
+        <a
+          href={tab.href}
+          class:list={[
+            'flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs transition-colors',
+            isActive
+              ? 'text-brand-500 dark:text-brand-400'
+              : 'text-[var(--text-secondary)] hover:text-brand-500 dark:hover:text-brand-400',
+          ]}
+        >
+          <span class="text-lg leading-none">{tab.icon}</span>
+          <span class="font-medium">{tab.label}</span>
+        </a>
+      );
+    })}
+  </div>
+</nav>

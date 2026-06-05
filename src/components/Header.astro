@@ -1,0 +1,82 @@
+---
+const currentPath = Astro.url.pathname;
+const navLinks = [
+  { href: '/fancy-text-generator', label: 'Fancy Text' },
+  { href: '/symbols', label: 'Symbols' },
+  { href: '/kaomoji', label: 'Kaomoji' },
+];
+const moreLinks = [
+  { href: '/invisible-character', label: 'Invisible Char' },
+  { href: '/text-dividers', label: 'Text Dividers' },
+  { href: '/bio-preview', label: 'Bio Preview' },
+];
+---
+
+<header class="sticky top-0 z-40 w-full border-b border-[var(--border-color)] bg-[var(--bg-primary)]/80 backdrop-blur-lg">
+  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 text-lg font-bold text-brand-500 dark:text-brand-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 32 32" fill="currentColor"><rect width="32" height="32" rx="6"/><text x="16" y="23" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="20" fill="white">T</text></svg>
+      <span class="hidden sm:inline">Social Text Toolkit</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-1">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+            currentPath === link.href
+              ? 'bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400'
+              : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-800',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <!-- More Dropdown -->
+      <div class="relative group">
+        <button class="px-3 py-1.5 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          More ▾
+        </button>
+        <div class="absolute right-0 top-full mt-1 w-44 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] p-1.5 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          {moreLinks.map((link) => (
+            <a href={link.href} class="block rounded-lg px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <!-- Right side -->
+    <div class="flex items-center gap-2">
+      <a href="/symbols" class="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Search symbols">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </a>
+      <button id="theme-btn" onclick="toggleTheme()" class="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle theme">
+        <span class="theme-icon-light hidden">☀️</span>
+        <span class="theme-icon-dark hidden">🌙</span>
+        <span class="theme-icon-default">🌙</span>
+      </button>
+      <!-- Mobile hamburger -->
+      <button class="md:hidden p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Update theme icon on load
+  function updateThemeIcon() {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    document.querySelectorAll('.theme-icon-light').forEach(el => el.classList.toggle('hidden', !isDark));
+    document.querySelectorAll('.theme-icon-dark').forEach(el => el.classList.toggle('hidden', isDark));
+    document.querySelectorAll('.theme-icon-default').forEach(el => el.classList.toggle('hidden', true));
+  }
+  updateThemeIcon();
+  const observer = new MutationObserver(updateThemeIcon);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>

@@ -1,0 +1,21 @@
+---
+export interface Props {
+  level: 'full' | 'partial' | 'limited' | 'warning';
+  platformName: string;
+}
+
+const { level, platformName } = Astro.props;
+
+const config = {
+  full: { icon: '✓', classes: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' },
+  partial: { icon: '⚠', classes: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' },
+  limited: { icon: '✗', classes: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' },
+  warning: { icon: '⚠', classes: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400' },
+};
+
+const { icon, classes } = config[level];
+---
+
+<span class={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${classes}`}>
+  {icon} {platformName}
+</span>

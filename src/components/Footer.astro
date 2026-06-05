@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+const links = [
+  { href: '#', label: 'About' },
+  { href: '#', label: 'Privacy Policy' },
+  { href: '#', label: 'Terms of Service' },
+  { href: '#', label: 'Contact' },
+];
+---
+
+<footer class="border-t border-[var(--border-color)] bg-[var(--bg-secondary)]">
+  <div class="mx-auto max-w-6xl px-4 py-8">
+    <nav class="flex flex-wrap justify-center gap-4 text-sm text-[var(--text-secondary)] mb-4">
+      {links.map((link) => (
+        <a href={link.href} class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors">{link.label}</a>
+      ))}
+    </nav>
+    <p class="text-center text-sm text-[var(--text-secondary)]">
+      &copy; {year} Social Text Toolkit. All rights reserved.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,74 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { kaomojiCategories } from '../data/kaomoji.js';
+
+const categoriesJson = JSON.stringify(kaomojiCategories);
+---
+
+<ToolLayout title="Kaomoji Collection" description="500+ Japanese text emoticons (kaomoji) organized by emotion. Happy, sad, love, angry, cute & more. Click to copy instantly.">
+  <div slot="tool">
+    <!-- Category Tabs -->
+    <div id="kaomoji-tabs" class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide">
+      {kaomojiCategories.map((cat, i) => (
+        <button
+          class:list={[
+            'kao-tab shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all whitespace-nowrap',
+            i === 0
+              ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900'
+              : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600',
+          ]}
+          data-category={cat.id}
+        >
+          {cat.icon} {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Kaomoji Grid -->
+    <div id="kaomoji-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+    </div>
+
+    <!-- Data store -->
+    <script set:html={`window.__kaomojiData = ${categoriesJson};`} />
+  </div>
+</ToolLayout>
+
+<script>
+  const categories = window.__kaomojiData || [];
+  const grid = document.getElementById('kaomoji-grid');
+  const tabs = document.querySelectorAll('.kao-tab');
+  let activeCategory = categories[0]?.id || 'happy';
+
+  function renderCategory(catId) {
+    const cat = categories.find(c => c.id === catId);
+    if (!cat) return;
+    grid.innerHTML = '';
+    for (const kao of cat.kaomoji) {
+      const btn = document.createElement('button');
+      btn.className = 'tool-card text-center py-4 hover:border-brand-300 dark:hover:border-brand-600 group';
+      btn.innerHTML = '<span class="text-xl block mb-1">' + kao + '</span><span class="text-xs text-[var(--text-secondary)] opacity-0 group-hover:opacity-100 transition-opacity">Click to copy</span>';
+      btn.onclick = function() { copyToClipboard(kao); };
+      grid.appendChild(btn);
+    }
+  }
+
+  function updateActiveTab(catId) {
+    activeCategory = catId;
+    tabs.forEach(function(tab) {
+      const isActive = tab.dataset.category === catId;
+      tab.className = 'kao-tab shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all whitespace-nowrap ' +
+        (isActive
+          ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900'
+          : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600');
+    });
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      updateActiveTab(tab.dataset.category);
+      renderCategory(tab.dataset.category);
+    });
+  });
+
+  renderCategory(activeCategory);
+</script>
