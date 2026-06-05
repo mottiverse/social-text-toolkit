@@ -24,8 +24,11 @@ const categoriesJson = JSON.stringify(symbolCategories);
 
   <!-- Category Tabs -->
   <section class="px-4 pb-4">
-    <!-- Platform quick filter -->
-    <div class="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+  <!-- Batch mode toggle and platform filter row -->
+  <div class="flex flex-wrap items-center gap-2 pb-3">
+    <button id="batch-mode-btn" class="px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all">
+      ☐ Batch Select
+    </button>
       <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all" data-platform="all">All</button>
       <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="ig">📸 IG</button>
       <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="tt">🎵 TikTok</button>
@@ -57,6 +60,20 @@ const categoriesJson = JSON.stringify(symbolCategories);
     </div>
     <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden">No symbols found</p>
   </section>
+
+  <!-- Batch selection bar -->
+  <div id="batch-bar" class="hidden fixed bottom-16 md:bottom-4 left-1/2 -translate-x-1/2 z-40 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl px-4 py-3 shadow-lg flex items-center gap-3 max-w-[95vw]">
+    <span id="batch-count" class="text-sm font-medium text-[var(--text-primary)]">0 selected</span>
+    <select id="batch-separator" class="text-xs rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] text-[var(--text-primary)] px-2 py-1">
+      <option value="">No separator</option>
+      <option value=" ">Space</option>
+      <option value="\n">New line</option>
+      <option value=", ">Comma</option>
+      <option value=" | ">Pipe</option>
+    </select>
+    <button id="batch-copy-btn" class="btn-copy text-xs" disabled>Copy All</button>
+    <button id="batch-clear-btn" class="px-2 py-1 rounded-lg text-xs text-[var(--text-secondary)] hover:text-red-500 transition-colors">Clear</button>
+  </div>
 </ToolLayout>
 
 <script is:inline src="/scripts/tabs.js"></script>
@@ -172,6 +189,66 @@ const categoriesJson = JSON.stringify(symbolCategories);
   // Initialize
   buildSymbolList();
   renderBatch(0, BATCH_SIZE);
+
+  // Batch mode
+  let batchMode = false;
+  const selectedSymbols = new Set();
+  const batchModeBtn = document.getElementById('batch-mode-btn');
+  const batchBar = document.getElementById('batch-bar');
+  const batchCount = document.getElementById('batch-count');
+  const batchCopyBtn = document.getElementById('batch-copy-btn');
+  const batchClearBtn = document.getElementById('batch-clear-btn');
+  const batchSeparator = document.getElementById('batch-separator');
+
+  function updateBatchUI() {
+    const count = selectedSymbols.size;
+    batchCount.textContent = count + ' selected';
+    batchCopyBtn.disabled = count === 0;
+    batchBar.classList.toggle('hidden', !batchMode || count === 0);
+    symbolGrid.classList.toggle('cursor-pointer', !batchMode);
+  }
+
+  batchModeBtn.addEventListener('click', () => {
+    batchMode = !batchMode;
+    batchModeBtn.classList.toggle('bg-brand-500', batchMode);
+    batchModeBtn.classList.toggle('text-white', batchMode);
+    batchModeBtn.classList.toggle('dark:bg-brand-400', batchMode);
+    batchModeBtn.classList.toggle('dark:text-gray-900', batchMode);
+    batchModeBtn.textContent = batchMode ? '☑ Batch Mode On' : '☐ Batch Select';
+    if (!batchMode) { selectedSymbols.clear(); }
+    updateBatchUI();
+  });
+
+  // Override grid click for batch mode
+  symbolGrid.addEventListener('click', (e) => {
+    if (!batchMode) return;
+    const btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    e.preventDefault();
+    const sym = btn.dataset.copy;
+    if (selectedSymbols.has(sym)) {
+      selectedSymbols.delete(sym);
+      btn.classList.remove('ring-2', 'ring-brand-500');
+    } else {
+      selectedSymbols.add(sym);
+      btn.classList.add('ring-2', 'ring-brand-500');
+    }
+    updateBatchUI();
+  }, true);
+
+  batchCopyBtn.addEventListener('click', () => {
+    const sep = batchSeparator.value.replace('\\n', '\n');
+    const text = [...selectedSymbols].join(sep);
+    if (window.copyToClipboard) window.copyToClipboard(text);
+  });
+
+  batchClearBtn.addEventListener('click', () => {
+    selectedSymbols.clear();
+    symbolGrid.querySelectorAll('.ring-2').forEach(el => el.classList.remove('ring-2', 'ring-brand-500'));
+    updateBatchUI();
+  });
+
+  batchSeparator.addEventListener('change', updateBatchUI);
 
   // Platform filter buttons
   const platformNote = document.getElementById('platform-note');

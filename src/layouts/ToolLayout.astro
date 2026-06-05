@@ -97,5 +97,72 @@ const { title, description } = Astro.props;
         </a>
       </div>
     </section>
+
+    <!-- Share -->
+    <section class="mt-8">
+      <h2 class="text-xl font-bold mb-3 text-[var(--text-primary)]">Share This Tool</h2>
+      <div class="flex flex-wrap gap-2">
+        <button
+          id="share-twitter"
+          class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
+          aria-label="Share on Twitter"
+          data-share="twitter"
+        >𝕏 Tweet</button>
+        <button
+          id="share-whatsapp"
+          class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
+          aria-label="Share on WhatsApp"
+          data-share="whatsapp"
+        >💬 WhatsApp</button>
+        <button
+          id="share-telegram"
+          class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
+          aria-label="Share on Telegram"
+          data-share="telegram"
+        >✈ Telegram</button>
+        <button
+          id="share-copy-link"
+          class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
+          aria-label="Copy link"
+          data-share="copy"
+        >🔗 Copy Link</button>
+      </div>
+    </section>
   </div>
 </BaseLayout>
+
+<script>
+  // Social share buttons
+  const pageUrl = window.location.href;
+  const pageTitle = document.title;
+
+  function share(platform) {
+    const encodedUrl = encodeURIComponent(pageUrl);
+    const encodedTitle = encodeURIComponent(pageTitle);
+    let shareUrl = '';
+
+    switch (platform) {
+      case 'twitter':
+        shareUrl = 'https://twitter.com/intent/tweet?text=' + encodedTitle + '&url=' + encodedUrl;
+        break;
+      case 'whatsapp':
+        shareUrl = 'https://wa.me/?text=' + encodedTitle + '%20' + encodedUrl;
+        break;
+      case 'telegram':
+        shareUrl = 'https://t.me/share/url?url=' + encodedUrl + '&text=' + encodedTitle;
+        break;
+      case 'copy':
+        if (window.copyToClipboard) {
+          window.copyToClipboard(pageUrl);
+          return;
+        }
+        return;
+    }
+
+    if (shareUrl) window.open(shareUrl, '_blank', 'noopener');
+  }
+
+  document.querySelectorAll('[data-share]').forEach(btn => {
+    btn.addEventListener('click', () => share(btn.dataset.share));
+  });
+</script>
