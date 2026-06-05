@@ -46,6 +46,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
   </section>
 </ToolLayout>
 
+<script is:inline src="/scripts/tabs.js"></script>
 <script define:vars={{ categoriesJson }}>
   const categories = JSON.parse(categoriesJson);
   let activeCategory = 'all';
@@ -98,22 +99,9 @@ const categoriesJson = JSON.stringify(symbolCategories);
     });
   }
 
-  // Tab click handlers
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.remove('active');
-        b.className = b.className.replace(/bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900/g, '').trim();
-        if (!b.classList.contains('border')) {
-          b.classList.add('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
-        }
-      });
-      btn.classList.add('active');
-      btn.classList.remove('border', 'border-[var(--border-color)]', 'text-[var(--text-secondary)]');
-      btn.classList.add('bg-brand-500', 'text-white', 'dark:bg-brand-400', 'dark:text-gray-900');
-      activeCategory = btn.dataset.category;
-      renderSymbols();
-    });
+  setupCategoryTabs('.tab-btn', (category) => {
+    activeCategory = category;
+    renderSymbols();
   });
 
   searchInput.addEventListener('input', renderSymbols);

@@ -32,10 +32,10 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
   </div>
 </ToolLayout>
 
+<script is:inline src="/scripts/tabs.js"></script>
 <script define:vars={{ categoriesJson }}>
   const categories = JSON.parse(categoriesJson);
   const grid = document.getElementById('kaomoji-grid');
-  const tabs = document.querySelectorAll('.kao-tab');
   let activeCategory = categories[0]?.id || 'happy';
 
   function renderCategory(catId) {
@@ -51,22 +51,9 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
     }
   }
 
-  function updateActiveTab(catId) {
-    activeCategory = catId;
-    tabs.forEach(function(tab) {
-      const isActive = tab.dataset.category === catId;
-      tab.className = 'kao-tab shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all whitespace-nowrap ' +
-        (isActive
-          ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900'
-          : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600');
-    });
-  }
-
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      updateActiveTab(tab.dataset.category);
-      renderCategory(tab.dataset.category);
-    });
+  setupCategoryTabs('.kao-tab', (category) => {
+    activeCategory = category;
+    renderCategory(category);
   });
 
   renderCategory(activeCategory);
