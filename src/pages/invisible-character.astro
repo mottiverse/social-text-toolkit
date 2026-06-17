@@ -11,6 +11,16 @@ const charsJson = JSON.stringify(invisibleChars);
 >
   <div slot="tool">
   <section class="px-4 pb-8">
+    <!-- Intro Section -->
+    <div class="mb-6 p-5 rounded-xl bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-800">
+      <h3 class="text-base font-semibold text-[var(--text-primary)] mb-2">💡 What are invisible characters?</h3>
+      <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+        Invisible characters are special Unicode characters that take up space or affect text layout without being visible. 
+        They're used to create <strong>blank usernames</strong>, add <strong>hidden spacing</strong> in bios, create <strong>empty messages</strong>, 
+        and format text in creative ways. Each type serves a different purpose — click any to copy it to your clipboard.
+      </p>
+    </div>
+
     <p class="text-sm text-[var(--text-secondary)] mb-4">
       Click any character to copy it. The dotted box represents the invisible character's position.
     </p>
@@ -28,29 +38,18 @@ const charsJson = JSON.stringify(invisibleChars);
     </div>
     <div id="char-list" class="space-y-3">
       {invisibleChars.map((item) => (
-        <div class="flex items-center gap-3 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
-          <!-- Visual representation -->
-          <button
-            class="flex-shrink-0 w-12 h-12 rounded-lg border-2 border-dashed border-brand-300 dark:border-brand-600 flex items-center justify-center cursor-pointer hover:bg-brand-100 dark:hover:bg-brand-900/30 active:scale-95 transition-all"
-            data-copy={item.char}
-            title={`Copy ${item.name} (${item.unicode})`}
-          >
-            <span class="text-xs text-brand-400 dark:text-brand-500 select-none">{item.char === ' ' ? 'SPC' : item.unicode.replace('U+', '')}</span>
+        <div class="flex items-center gap-4 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-300 dark:hover:border-brand-600 transition-all group">
+          <button class="flex-shrink-0 w-14 h-14 rounded-xl bg-brand-500 hover:bg-brand-600 dark:bg-brand-400 dark:hover:bg-brand-300 text-white font-bold text-sm flex items-center justify-center transition-all active:scale-95" data-copy={item.char} title={`Copy ${item.name}`}>
+            Copy
           </button>
-          <!-- Info -->
           <div class="flex-1 min-w-0">
-            <h3 class="font-semibold text-[var(--text-primary)] text-sm">{item.name}</h3>
-            <p class="text-xs text-[var(--text-secondary)] mt-0.5">{item.description}</p>
-            <div class="flex gap-2 mt-1.5">
-              <span class="inline-block px-1.5 py-0.5 text-[10px] rounded bg-[var(--bg-secondary)] text-[var(--text-secondary)] font-mono">{item.unicode}</span>
-              <span class="inline-block px-1.5 py-0.5 text-[10px] rounded bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 truncate max-w-[200px]">{item.use}</span>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-semibold text-[var(--text-primary)] text-sm">{item.name}</h3>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[var(--bg-secondary)] text-[var(--text-secondary)] font-mono">{item.unicode}</span>
             </div>
+            <p class="text-xs text-[var(--text-secondary)]">{item.description}</p>
+            <p class="text-xs text-brand-500 dark:text-brand-400 mt-1">💡 Use for: {item.use}</p>
           </div>
-          <!-- Copy button -->
-          <button
-            class="btn-copy flex-shrink-0"
-            data-copy={item.char}
-          >Copy</button>
         </div>
       ))}
     </div>
