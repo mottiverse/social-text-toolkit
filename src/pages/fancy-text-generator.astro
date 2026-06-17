@@ -155,9 +155,12 @@ const fontsForClient = fontList.map(f => ({
       showMoreBtn.textContent = showAll ? 'Show less' : 'Show all ' + fonts.length + ' styles';
       showMoreBtn.setAttribute('data-i18n', showAll ? 'fancyText.showLess' : 'fancyText.showAll');
       // Re-apply translation since we overwrote textContent
-      if (window.applyTranslations && window.getLanguage && window.getLanguage() === 'zh' && window.__translations) {
-        const key = showAll ? 'fancyText.showLess' : 'fancyText.showAll';
-        if (window.__translations[key]) showMoreBtn.textContent = window.__translations[key];
+      if (window.getLanguage && window.getLanguage() === 'zh') {
+        var packs = window.__translations;
+        if (packs && packs['zh']) {
+          var k = showAll ? 'fancyText.showLess' : 'fancyText.showAll';
+          if (packs['zh'][k]) showMoreBtn.textContent = packs['zh'][k];
+        }
       }
     }
   }

@@ -24,7 +24,9 @@ window.setLanguage = function (lang) {
 // Apply translations to all [data-i18n] and [data-i18n-placeholder] elements
 function applyTranslations(lang) {
   if (!window.__translations) return;
-  var t = window.__translations;
+  var packs = window.__translations;
+  // Use the requested language pack, fall back to English
+  var t = packs[lang] || packs['en'] || {};
 
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
     var key = el.getAttribute('data-i18n');
@@ -45,28 +47,30 @@ function applyTranslations(lang) {
 var observer = new MutationObserver(function (mutations) {
   if (!window.__translations) return;
   var lang = window.getLanguage();
-  if (lang === 'en') return; // Default is English
+  if (lang === 'en') return; // Default is English, no translation needed
+
+  var t = window.__translations[lang] || window.__translations['en'] || {};
 
   mutations.forEach(function (mutation) {
     mutation.addedNodes.forEach(function (node) {
       if (node.nodeType !== 1) return;
       if (node.hasAttribute && node.hasAttribute('data-i18n')) {
         var key = node.getAttribute('data-i18n');
-        if (window.__translations[key]) {
-          node.textContent = window.__translations[key];
+        if (t[key]) {
+          node.textContent = t[key];
         }
       }
       if (node.querySelectorAll) {
         node.querySelectorAll('[data-i18n]').forEach(function (el) {
           var key = el.getAttribute('data-i18n');
-          if (window.__translations[key]) {
-            el.textContent = window.__translations[key];
+          if (t[key]) {
+            el.textContent = t[key];
           }
         });
         node.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
           var key = el.getAttribute('data-i18n-placeholder');
-          if (window.__translations[key]) {
-            el.setAttribute('placeholder', window.__translations[key]);
+          if (t[key]) {
+            el.setAttribute('placeholder', t[key]);
           }
         });
       }

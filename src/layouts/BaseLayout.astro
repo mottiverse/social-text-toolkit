@@ -12,6 +12,7 @@ export interface Props {
 }
 
 const { title, description } = Astro.props;
+const enPack = JSON.stringify(getLanguagePack('en'));
 const zhPack = JSON.stringify(getLanguagePack('zh'));
 ---
 
@@ -30,8 +31,8 @@ const zhPack = JSON.stringify(getLanguagePack('zh'));
     </main>
     <Footer />
     <MobileNav />
-    <script define:vars={{ zhPack }}>
-      window.__translations = JSON.parse(zhPack);
+    <script define:vars={{ enPack, zhPack }}>
+      window.__translations = { en: JSON.parse(enPack), zh: JSON.parse(zhPack) };
     </script>
     <script is:inline src="/scripts/copy.js"></script>
     <script is:inline src="/scripts/favorites.js"></script>
