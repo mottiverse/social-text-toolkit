@@ -34,5 +34,12 @@ export const fontCompatibility = {
   'bold-italic': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'partial', youtube: 'full' },
   'gothic': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'partial', youtube: 'full' },
   'fullwidth': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'sans-serif': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'sans-serif-bold': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'sans-serif-italic': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'sans-serif-bold-italic': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'parenthesized': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'partial', youtube: 'full' },
+  'strikethrough': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'underline': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
   'zalgo': { instagram: 'limited', tiktok: 'limited', discord: 'full', twitter: 'limited', linkedin: 'limited', youtube: 'limited' },
 };
