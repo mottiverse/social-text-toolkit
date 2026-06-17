@@ -43,6 +43,13 @@ export const translations = {
   'toolLayout.faq3a': { en: 'Some platforms allow fancy text in usernames, but many don\'t. Check each platform\'s rules. We show character limits to help you stay within bounds.', zh: '部分平台允许在用户名中使用花式文字，但很多不允许。请查看各平台规则。我们会显示字符限制帮助你控制在范围内。' },
   'toolLayout.relatedTools': { en: 'Related Tools', zh: '相关工具' },
   'toolLayout.shareTool': { en: 'Share This Tool', zh: '分享此工具' },
+  'toolLayout.relatedFancyText': { en: 'Fancy Text Generator', zh: '花式文字生成器' },
+  'toolLayout.relatedSymbols': { en: 'Symbol Library', zh: '符号库' },
+  'toolLayout.relatedKaomoji': { en: 'Kaomoji Collection', zh: '颜文字合集' },
+  'toolLayout.shareTwitter': { en: '𝕏 Tweet', zh: '𝕏 推文' },
+  'toolLayout.shareWhatsapp': { en: '💬 WhatsApp', zh: '💬 WhatsApp' },
+  'toolLayout.shareTelegram': { en: '✈ Telegram', zh: '✈ Telegram' },
+  'toolLayout.shareCopyLink': { en: '🔗 Copy Link', zh: '🔗 复制链接' },
 
   // === Homepage ===
   'home.title': { en: 'Social Text Toolkit', zh: 'Social Text Toolkit' },

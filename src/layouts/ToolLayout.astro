@@ -85,15 +85,15 @@ const { title, description } = Astro.props;
       <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <a href="/fancy-text-generator" class="tool-card">
           <span class="text-xl">✨</span>
-          <span class="font-medium ml-2">Fancy Text Generator</span>
+          <span class="font-medium ml-2" data-i18n="toolLayout.relatedFancyText">Fancy Text Generator</span>
         </a>
         <a href="/symbols" class="tool-card">
           <span class="text-xl">💎</span>
-          <span class="font-medium ml-2">Symbol Library</span>
+          <span class="font-medium ml-2" data-i18n="toolLayout.relatedSymbols">Symbol Library</span>
         </a>
         <a href="/kaomoji" class="tool-card">
           <span class="text-xl">(◕‿◕)</span>
-          <span class="font-medium ml-2">Kaomoji Collection</span>
+          <span class="font-medium ml-2" data-i18n="toolLayout.relatedKaomoji">Kaomoji Collection</span>
         </a>
       </div>
     </section>
@@ -107,25 +107,25 @@ const { title, description } = Astro.props;
           class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
           aria-label="Share on Twitter"
           data-share="twitter"
-        >𝕏 Tweet</button>
+        ><span data-i18n="toolLayout.shareTwitter">𝕏 Tweet</span></button>
         <button
           id="share-whatsapp"
           class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
           aria-label="Share on WhatsApp"
           data-share="whatsapp"
-        >💬 WhatsApp</button>
+        ><span data-i18n="toolLayout.shareWhatsapp">💬 WhatsApp</span></button>
         <button
           id="share-telegram"
           class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
           aria-label="Share on Telegram"
           data-share="telegram"
-        >✈ Telegram</button>
+        ><span data-i18n="toolLayout.shareTelegram">✈ Telegram</span></button>
         <button
           id="share-copy-link"
           class="px-3 py-2 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 hover:text-brand-500 transition-all"
           aria-label="Copy link"
           data-share="copy"
-        >🔗 Copy Link</button>
+        ><span data-i18n="toolLayout.shareCopyLink">🔗 Copy Link</span></button>
       </div>
     </section>
   </div>
