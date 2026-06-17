@@ -1,11 +1,11 @@
 ---
 const year = new Date().getFullYear();
 const links = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
-  { href: '/privacy-policy', label: 'Privacy Policy' },
-  { href: '/terms-of-service', label: 'Terms of Service' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/blog', label: 'Blog', i18n: 'footer.blog' },
+  { href: '/about', label: 'About', i18n: 'footer.about' },
+  { href: '/privacy-policy', label: 'Privacy Policy', i18n: 'footer.privacy' },
+  { href: '/terms-of-service', label: 'Terms of Service', i18n: 'footer.terms' },
+  { href: '/contact', label: 'Contact', i18n: 'footer.contact' },
 ];
 ---
 
@@ -13,11 +13,11 @@ const links = [
   <div class="mx-auto max-w-6xl px-4 py-8">
     <nav class="flex flex-wrap justify-center gap-4 text-sm text-[var(--text-secondary)] mb-4">
       {links.map((link) => (
-        <a href={link.href} class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors">{link.label}</a>
+        <a href={link.href} class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors" data-i18n={link.i18n}>{link.label}</a>
       ))}
     </nav>
     <p class="text-center text-sm text-[var(--text-secondary)]">
-      &copy; {year} Social Text Toolkit. All rights reserved.
+      &copy; {year} <span data-i18n="footer.copyright">Social Text Toolkit. All rights reserved.</span>
     </p>
   </div>
 </footer>

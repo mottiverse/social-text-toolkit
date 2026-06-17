@@ -27,61 +27,61 @@ const { title, description } = Astro.props;
 
     <!-- How to Use -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-4">How to Use</h2>
+      <h2 class="text-2xl font-bold mb-4" data-i18n="toolLayout.howToUse">How to Use</h2>
       <div class="grid gap-4 md:grid-cols-3">
         <div class="tool-card">
           <div class="text-2xl mb-2">1️⃣</div>
-          <h3 class="font-semibold mb-1">Type Your Text</h3>
-          <p class="text-sm text-[var(--text-secondary)]">Enter your text in the input area above.</p>
+          <h3 class="font-semibold mb-1" data-i18n="toolLayout.step1Title">Type Your Text</h3>
+          <p class="text-sm text-[var(--text-secondary)]" data-i18n="toolLayout.step1Desc">Enter your text in the input area above.</p>
         </div>
         <div class="tool-card">
           <div class="text-2xl mb-2">2️⃣</div>
-          <h3 class="font-semibold mb-1">Choose a Style</h3>
-          <p class="text-sm text-[var(--text-secondary)]">Browse through different styles and pick your favorite.</p>
+          <h3 class="font-semibold mb-1" data-i18n="toolLayout.step2Title">Choose a Style</h3>
+          <p class="text-sm text-[var(--text-secondary)]" data-i18n="toolLayout.step2Desc">Browse through different styles and pick your favorite.</p>
         </div>
         <div class="tool-card">
           <div class="text-2xl mb-2">3️⃣</div>
-          <h3 class="font-semibold mb-1">Copy & Paste</h3>
-          <p class="text-sm text-[var(--text-secondary)]">Click copy, then paste into your social media profile.</p>
+          <h3 class="font-semibold mb-1" data-i18n="toolLayout.step3Title">Copy & Paste</h3>
+          <p class="text-sm text-[var(--text-secondary)]" data-i18n="toolLayout.step3Desc">Click copy, then paste into your social media profile.</p>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+      <h2 class="text-2xl font-bold mb-4" data-i18n="toolLayout.faq">Frequently Asked Questions</h2>
       <div class="space-y-3">
         {Astro.slots.has('faq') ? (
           <slot name="faq" />
         ) : (
           <>
             <details class="tool-card cursor-pointer group">
-              <summary class="font-semibold list-none flex items-center justify-between">
+              <summary class="font-semibold list-none flex items-center justify-between" data-i18n="toolLayout.faq1q">
                 What platforms do these styles work on?
                 <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </summary>
-              <p class="text-sm text-[var(--text-secondary)] mt-2">Most styles work on Instagram, TikTok, Discord, Twitter/X, and YouTube. Some styles may show as squares on certain platforms — check the compatibility tags on each style.</p>
+              <p class="text-sm text-[var(--text-secondary)] mt-2" data-i18n="toolLayout.faq1a">Most styles work on Instagram, TikTok, Discord, Twitter/X, and YouTube. Some styles may show as squares on certain platforms — check the compatibility tags on each style.</p>
             </details>
             <details class="tool-card cursor-pointer group">
-              <summary class="font-semibold list-none flex items-center justify-between">
+              <summary class="font-semibold list-none flex items-center justify-between" data-i18n="toolLayout.faq2q">
                 Is this free to use?
                 <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </summary>
-              <p class="text-sm text-[var(--text-secondary)] mt-2">Yes! All tools on Social Text Toolkit are completely free. No sign-up required.</p>
+              <p class="text-sm text-[var(--text-secondary)] mt-2" data-i18n="toolLayout.faq2a">Yes! All tools on Social Text Toolkit are completely free. No sign-up required.</p>
             </details>
             <details class="tool-card cursor-pointer group">
-              <summary class="font-semibold list-none flex items-center justify-between">
+              <summary class="font-semibold list-none flex items-center justify-between" data-i18n="toolLayout.faq3q">
                 Will these work in my username?
                 <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </summary>
-              <p class="text-sm text-[var(--text-secondary)] mt-2">Some platforms allow fancy text in usernames, but many don't. Check each platform's rules. We show character limits to help you stay within bounds.</p>
+              <p class="text-sm text-[var(--text-secondary)] mt-2" data-i18n="toolLayout.faq3a">Some platforms allow fancy text in usernames, but many don't. Check each platform's rules. We show character limits to help you stay within bounds.</p>
             </details>
           </>
         )}
 
     <!-- Related Tools -->
     <section>
-      <h2 class="text-2xl font-bold mb-4">Related Tools</h2>
+      <h2 class="text-2xl font-bold mb-4" data-i18n="toolLayout.relatedTools">Related Tools</h2>
       <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <a href="/fancy-text-generator" class="tool-card">
           <span class="text-xl">✨</span>
@@ -100,7 +100,7 @@ const { title, description } = Astro.props;
 
     <!-- Share -->
     <section class="mt-8">
-      <h2 class="text-xl font-bold mb-3 text-[var(--text-primary)]">Share This Tool</h2>
+      <h2 class="text-xl font-bold mb-3 text-[var(--text-primary)]" data-i18n="toolLayout.shareTool">Share This Tool</h2>
       <div class="flex flex-wrap gap-2">
         <button
           id="share-twitter"

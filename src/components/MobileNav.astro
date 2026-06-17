@@ -1,10 +1,10 @@
 ---
 const currentPath = Astro.url.pathname;
 const tabs = [
-  { href: '/', label: 'Home', icon: '🏠' },
-  { href: '/fancy-text-generator', label: 'Tools', icon: '🔧' },
-  { href: '/symbols', label: 'Symbols', icon: '✨' },
-  { href: '/favorites', label: 'Favorites', icon: '⭐' },
+  { href: '/', label: 'Home', icon: '🏠', i18n: 'mnav.home' },
+  { href: '/fancy-text-generator', label: 'Tools', icon: '🔧', i18n: 'mnav.tools' },
+  { href: '/symbols', label: 'Symbols', icon: '✨', i18n: 'nav.symbols' },
+  { href: '/favorites', label: 'Favorites', icon: '⭐', i18n: 'mnav.favorites' },
 ];
 ---
 
@@ -25,7 +25,7 @@ const tabs = [
           ]}
         >
           <span class="text-lg leading-none">{tab.icon}</span>
-          <span class="font-medium">{tab.label}</span>
+          <span class="font-medium" data-i18n={tab.i18n}>{tab.label}</span>
           {tab.href === '/favorites' && <span id="fav-badge" class="absolute -top-0.5 -right-1 min-w-[1.125rem] h-[1.125rem] flex items-center justify-center rounded-full bg-brand-500 text-white text-[10px] font-bold px-1 hidden">0</span>}
         </a>
       );
