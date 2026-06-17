@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About Us — Social Text Toolkit" description="Learn about Social Text Toolkit — a free, privacy-first collection of text decoration tools for social media creators. No ads, no tracking, open source.">
+  <article class="prose prose-lg dark:prose-invert max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-6">About Social Text Toolkit</h1>
+
+    <h2 class="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-4">Our Mission</h2>
+    <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+      Social Text Toolkit was born from a simple frustration: making your social media profile look good shouldn't require jumping between five different websites. We built this toolkit to give creators, gamers, and social media enthusiasts one place to find, preview, and copy beautiful text decorations — fast, free, and without distractions.
+    </p>
+    <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+      Whether you're crafting the perfect Instagram bio, customizing your Discord username, or adding flair to a TikTok caption, our tools help you do it in under two minutes. No accounts, no paywalls, no clutter — just practical tools that work.
+    </p>
+
+    <h2 class="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-4">What We Offer</h2>
+    <ul class="list-disc pl-6 text-[var(--text-secondary)] space-y-2 mb-4">
+      <li><strong class="text-[var(--text-primary)]">Fancy Text Generator</strong> — Convert plain text into 30+ Unicode font styles with real-time preview and platform compatibility labels.</li>
+      <li><strong class="text-[var(--text-primary)]">Symbol Library</strong> — Browse 1000+ copy-paste symbols organized by category (hearts, stars, arrows, dividers, and more).</li>
+      <li><strong class="text-[var(--text-primary)]">Kaomoji Collection</strong> — Explore Japanese emoticons sorted by emotion, with search and one-click copy.</li>
+      <li><strong class="text-[var(--text-primary)]">Invisible Character</strong> — Copy zero-width and invisible Unicode characters for creative username spacing.</li>
+      <li><strong class="text-[var(--text-primary)]">Bio Preview Tool</strong> — Preview how your decorated bio will look on Instagram, TikTok, and Discord before you paste it.</li>
+      <li><strong class="text-[var(--text-primary)]">Text Dividers</strong> — Decorative separators and borders for organizing your bio or posts.</li>
+      <li><strong class="text-[var(--text-primary)]">And more</strong> — Small text generator, upside-down text, glitch/Zalgo text, username generator, text-to-image, ASCII art, lenny faces, and emoji combos.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-4">Our Principles</h2>
+    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+      <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1">🔒 Privacy First</h3>
+        <p class="text-sm text-[var(--text-secondary)]">No accounts, no tracking, no analytics that identify you. Everything you create stays on your device via localStorage.</p>
+      </div>
+      <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1">⚡ Lightning Fast</h3>
+        <p class="text-sm text-[var(--text-secondary)]">Pure static site with zero backend. All processing happens in your browser. Pages load in under one second.</p>
+      </div>
+      <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1">📱 Mobile First</h3>
+        <p class="text-sm text-[var(--text-secondary)]">Designed for one-handed use on mobile. Large touch targets, no horizontal scrolling, dark mode support.</p>
+      </div>
+      <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1">🌍 Open Source</h3>
+        <p class="text-sm text-[var(--text-secondary)]">Built with Astro and Tailwind CSS. The code is open for anyone to inspect, learn from, or contribute to.</p>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-4">How It Works</h2>
+    <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+      All our tools work entirely in your browser using Unicode character mapping. When you type "hello" and select a fancy font, we replace each character with its Unicode mathematical or stylistic equivalent. No server processing, no API calls, no data ever leaves your device. The only data we store is what you explicitly save to your favorites — and that stays in your browser's localStorage.
+    </p>
+
+    <h2 class="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-4">Contact Us</h2>
+    <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+      Have feedback, suggestions, or found a bug? We'd love to hear from you. Visit our <a href="/contact" class="text-brand-500 hover:text-brand-600 underline">Contact page</a> or open an issue on GitHub.
+    </p>
+  </article>
+</BaseLayout>

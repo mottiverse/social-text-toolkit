@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact Us — Social Text Toolkit" description="Get in touch with the Social Text Toolkit team. Report bugs, suggest features, or ask questions about our free text decoration tools.">
+  <article class="prose prose-lg dark:prose-invert max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-6">Contact Us</h1>
+    <p class="text-[var(--text-secondary)] leading-relaxed mb-8">
+      We'd love to hear from you! Whether you have feedback, feature requests, bug reports, or just want to say hello — reach out through any of the channels below.
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-8">
+      <a href="https://github.com/mottiverse/social-text-toolkit/issues" class="p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-400 transition-colors no-underline group" rel="noopener noreferrer">
+        <div class="text-2xl mb-2">🐛</div>
+        <h3 class="font-semibold text-[var(--text-primary)] group-hover:text-brand-500 mb-1">Bug Reports</h3>
+        <p class="text-sm text-[var(--text-secondary)]">Open an issue on GitHub with a detailed description of the problem.</p>
+      </a>
+      <a href="https://github.com/mottiverse/social-text-toolkit/issues" class="p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-400 transition-colors no-underline group" rel="noopener noreferrer">
+        <div class="text-2xl mb-2">💡</div>
+        <h3 class="font-semibold text-[var(--text-primary)] group-hover:text-brand-500 mb-1">Feature Requests</h3>
+        <p class="text-sm text-[var(--text-secondary)]">Suggest a new tool or improvement via GitHub Issues.</p>
+      </a>
+      <a href="https://github.com/mottiverse/social-text-toolkit/discussions" class="p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-400 transition-colors no-underline group" rel="noopener noreferrer">
+        <div class="text-2xl mb-2">💬</div>
+        <h3 class="font-semibold text-[var(--text-primary)] group-hover:text-brand-500 mb-1">Discussions</h3>
+        <p class="text-sm text-[var(--text-secondary)]">Join the conversation on GitHub Discussions for general questions and ideas.</p>
+      </a>
+      <a href="https://github.com/mottiverse/social-text-toolkit" class="p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-400 transition-colors no-underline group" rel="noopener noreferrer">
+        <div class="text-2xl mb-2">⭐</div>
+        <h3 class="font-semibold text-[var(--text-primary)] group-hover:text-brand-500 mb-1">Contribute</h3>
+        <p class="text-sm text-[var(--text-secondary)]">This project is open source. Check out the repository and submit a PR!</p>
+      </a>
+    </div>
+
+    <h2 class="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-4">Frequently Asked Questions</h2>
+
+    <div class="space-y-4 mb-4">
+      <details class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <summary class="font-medium text-[var(--text-primary)] cursor-pointer">Is Social Text Toolkit really free?</summary>
+        <p class="text-[var(--text-secondary)] text-sm mt-2">Yes! All tools are completely free with no hidden costs, no premium tiers, and no required accounts. We may introduce non-intrusive advertising in the future to cover hosting costs, but core functionality will always remain free.</p>
+      </details>
+      <details class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <summary class="font-medium text-[var(--text-primary)] cursor-pointer">Do I need to create an account?</summary>
+        <p class="text-[var(--text-secondary)] text-sm mt-2">No. There's no registration, no login, and no account system. Everything works instantly in your browser.</p>
+      </details>
+      <details class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <summary class="font-medium text-[var(--text-primary)] cursor-pointer">Is my data safe?</summary>
+        <p class="text-[var(--text-secondary)] text-sm mt-2">Absolutely. Text you type never leaves your device. Favorites and copy history are stored only in your browser's localStorage. See our <a href="/privacy-policy" class="text-brand-500 hover:text-brand-600 underline">Privacy Policy</a> for details.</p>
+      </details>
+      <details class="p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <summary class="font-medium text-[var(--text-primary)] cursor-pointer">Will the generated text work on Instagram/TikTok/Discord?</summary>
+        <p class="text-[var(--text-secondary)] text-sm mt-2">Most styles work on major platforms. Each tool includes platform compatibility labels (✓ = works, ⚠️ = partial). Platform Unicode support can change, so we recommend testing before publishing important content.</p>
+      </details>
+    </div>
+  </article>
+</BaseLayout>
