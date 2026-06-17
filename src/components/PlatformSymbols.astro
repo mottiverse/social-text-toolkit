@@ -1,0 +1,169 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { symbolCategories } from '../data/symbols.js';
+import { platforms } from '../data/platforms.js';
+
+export interface Props {
+  platform: 'instagram' | 'tiktok' | 'discord';
+}
+
+const { platform } = Astro.props;
+const p = platforms[platform];
+const bioRelevantCategoryIds = ['hearts', 'stars', 'arrows', 'decorative', 'dividers', 'music', 'flowers', 'checkmarks'];
+const filteredCategories = symbolCategories.filter(c => bioRelevantCategoryIds.includes(c.id));
+const categoriesJson = JSON.stringify(filteredCategories.map(c => ({
+  ...c,
+  symbols: c.symbols.map(s => typeof s === 'string' ? s : s.char),
+})));
+---
+
+<ToolLayout
+  title={`${p.name} Bio Symbols`}
+  description={`Copy-paste aesthetic symbols and decorations for your ${p.name} bio. Hearts, stars, arrows, dividers, and more — all compatible with ${p.name}. Click to copy instantly.`}
+>
+  <div slot="tool">
+    <!-- Platform Info Header -->
+    <div class="mb-6 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">
+        {p.icon} {p.name} Bio Symbol Guide
+      </h3>
+      <p class="text-xs text-[var(--text-secondary)] mb-2">
+        All symbols below work on {p.name}. {p.name} bio character limit: <strong class="text-[var(--text-primary)]">{p.bioLimit} characters</strong>.
+        {p.nameLimit ? ` Name limit: ${p.nameLimit} characters.` : ''}
+      </p>
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Full compatibility</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+          {p.bioLimit} char bio limit
+        </span>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-6">
+      <div class="relative">
+        <input
+          id="platform-search"
+          type="text"
+          placeholder={`Search ${p.name} bio symbols...`}
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 text-sm transition-all"
+        />
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div id="platform-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide">
+      <button class="platform-tab shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900 border transition-all" data-category="all" role="tab" aria-selected="true">
+        🔍 All
+      </button>
+      {filteredCategories.map((cat) => (
+        <button
+          class="platform-tab shrink-0 px-4 py-2 rounded-full text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all whitespace-nowrap"
+          data-category={cat.id}
+          role="tab"
+          aria-selected="false"
+        >
+          {cat.icon} {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Symbol Grid -->
+    <div id="platform-grid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1.5">
+    </div>
+
+    <!-- Usage Tips -->
+    <div class="mt-8 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">{p.name} Bio Tips</h3>
+      <ul class="text-xs text-[var(--text-secondary)] space-y-1.5 list-disc pl-4">
+        {platform === 'instagram' && (
+          <>
+            <li>Instagram bio allows up to {p.bioLimit} characters including emojis and symbols.</li>
+            <li>Line breaks are supported — use dividers to separate sections.</li>
+            <li>All Unicode symbols work on Instagram. Fancy fonts may display differently.</li>
+            <li>Start with a catchy line, add symbols for personality, end with a CTA.</li>
+          </>
+        )}
+        {platform === 'tiktok' && (
+          <>
+            <li>TikTok bio is limited to {p.bioLimit} characters — keep it short and impactful.</li>
+            <li>Only one clickable link is allowed in your TikTok bio.</li>
+            <li>Symbols and emojis help your bio stand out in a crowded feed.</li>
+            <li>Use arrows and hearts to draw attention to your link.</li>
+          </>
+        )}
+        {platform === 'discord' && (
+          <>
+            <li>Discord usernames are limited to {p.nameLimit} characters.</li>
+            <li>Discord "About Me" section allows up to {p.bioLimit} characters.</li>
+            <li>All Unicode symbols work in Discord names and bios.</li>
+            <li>Use dividers and decorative symbols to organize your server profile.</li>
+          </>
+        )}
+      </ul>
+    </div>
+  </div>
+</ToolLayout>
+
+<script is:inline src="/scripts/tabs.js"></script>
+<script define:vars={{ categoriesJson, platform }}>
+  const categories = JSON.parse(categoriesJson);
+  const grid = document.getElementById('platform-grid');
+  const searchInput = document.getElementById('platform-search');
+  let activeCategory = 'all';
+
+  function getAllSymbols() {
+    const all = [];
+    for (const cat of categories) {
+      for (const sym of cat.symbols) {
+        all.push(sym);
+      }
+    }
+    return all;
+  }
+
+  function renderCategory(catId) {
+    const query = searchInput.value.toLowerCase().trim();
+    let symbols = [];
+    if (catId === 'all') {
+      symbols = getAllSymbols();
+    } else {
+      const cat = categories.find(c => c.id === catId);
+      if (cat) symbols = cat.symbols;
+    }
+
+    grid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    for (const sym of symbols) {
+      if (query && !sym.toLowerCase().includes(query)) continue;
+      const btn = document.createElement('button');
+      btn.className = 'w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-lg sm:text-xl rounded-lg hover:bg-brand-100 dark:hover:bg-brand-900/30 active:scale-95 transition-all cursor-pointer';
+      btn.textContent = sym;
+      btn.dataset.copy = sym;
+      btn.setAttribute('aria-label', 'Copy ' + sym);
+      fragment.appendChild(btn);
+    }
+    grid.appendChild(fragment);
+    if (!fragment.children.length) {
+      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8 text-sm">No symbols found</p>';
+    }
+  }
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-copy]');
+    if (btn && window.copyToClipboard) {
+      window.copyToClipboard(btn.dataset.copy);
+    }
+  });
+
+  searchInput.addEventListener('input', () => renderCategory(activeCategory));
+
+  setupCategoryTabs('.platform-tab', (category) => {
+    activeCategory = category;
+    searchInput.value = '';
+    renderCategory(category);
+  });
+
+  renderCategory(activeCategory);
+</script>
