@@ -136,6 +136,10 @@ export const translations = {
   'symbols.searchPlaceholder': { en: 'Search symbols...', zh: '搜索符号...' },
   'symbols.all': { en: 'All', zh: '全部' },
   'symbols.platformNote': { en: 'All symbols use standard Unicode and work on all platforms. Some emoji rendering may differ by platform.', zh: '所有符号使用标准 Unicode，在所有平台上均可使用。部分 Emoji 渲染可能因平台而异。' },
+  'symbols.batchSelect': { en: '☐ Batch Select', zh: '☐ 批量选择' },
+  'symbols.batchModeOn': { en: '☑ Batch Mode On', zh: '☑ 批量模式开启' },
+  'symbols.copySymbol': { en: 'Copy symbol', zh: '复制符号' },
+  'symbols.selectedCount': { en: '{count} selected', zh: '已选 {count} 个' },
 
   // === Kaomoji Page ===
   'kaomoji.title': { en: 'Kaomoji Collection', zh: '颜文字合集' },
@@ -161,21 +165,28 @@ export const translations = {
   // === Small Text ===
   'smallText.title': { en: 'Small Text Generator', zh: '小字生成器' },
   'smallText.desc': { en: 'Generate superscript, subscript, and small caps text. Perfect for social media bios, math notation, and creative formatting.', zh: '生成上标、下标和小型大写字母文字。适合社交媒体 Bio、数学符号和创意排版。' },
+  'smallText.startTyping': { en: 'Start typing above to see small text styles', zh: '在上方输入文字查看小字风格' },
 
   // === Upside Down Text ===
   'upsideDown.title': { en: 'Upside Down Text', zh: '翻转文字' },
   'upsideDown.desc': { en: 'Flip your text upside down instantly. Fun for social media posts, usernames, and creative messages.', zh: '即时将文字上下翻转。适合社交媒体帖子、用户名和创意消息。' },
+  'upsideDown.flippedText': { en: 'Flipped Text', zh: '翻转文字' },
+  'upsideDown.flipBack': { en: 'Flip Back', zh: '翻转回来' },
 
   // === Glitch Text ===
   'glitch.title': { en: 'Glitch / Zalgo Text Generator', zh: '故障 / Zalgo 文字生成器' },
   'glitch.desc': { en: 'Create creepy, glitchy Zalgo text with adjustable intensity. Perfect for horror themes, gaming, and creative effects.', zh: '创建恐怖、故障风格的 Zalgo 文字，可调节强度。适合恐怖主题、游戏和创意效果。' },
   'glitch.compatNote': { en: 'Zalgo text works best on Discord. Heavy and Extreme levels may display incorrectly on most platforms. Twitter/X strips combining marks entirely.', zh: 'Zalgo 文字在 Discord 上效果最佳。高强度和极强级别在大多数平台上可能显示异常。Twitter/X 会完全移除组合标记。' },
+  'glitch.startTyping': { en: 'Start typing to see glitch effects', zh: '输入文字查看故障效果' },
+  'glitch.glitchedText': { en: 'Glitched Text', zh: '故障文字' },
+  'glitch.regenerate': { en: '↻ Regenerate', zh: '↻ 重新生成' },
 
   // === Username Generator ===
   'username.title': { en: 'Username Generator', zh: '用户名生成器' },
   'username.desc': { en: 'Generate aesthetic usernames from keywords. Platform character limit checking for Instagram, TikTok, Discord & more.', zh: '从关键词生成美学用户名。检查 Instagram、TikTok、Discord 等平台字符限制。' },
   'username.enterKeyword': { en: 'Enter a keyword', zh: '输入关键词' },
   'username.placeholder': { en: 'e.g. starlight, cosmic, shadow...', zh: '例如 starlight, cosmic, shadow...' },
+  'username.startTyping': { en: 'Enter a keyword to generate username ideas', zh: '输入关键词生成用户名' },
 
   // === Text to Image ===
   'textToImage.title': { en: 'Text to Image', zh: '文字转图片' },

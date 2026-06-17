@@ -42,7 +42,7 @@ const categoriesJson = JSON.stringify(dividerCategories);
   <section class="px-4 pb-8">
     <div id="divider-list" class="space-y-3">
     </div>
-    <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden">No dividers found</p>
+    <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden" data-i18n="noResults">No dividers found</p>
   </section>
 </ToolLayout>
 
@@ -70,7 +70,7 @@ const categoriesJson = JSON.stringify(dividerCategories);
     btn.className = 'w-full p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-sm active:scale-[0.99] transition-all cursor-pointer text-left group';
     btn.dataset.copy = item.divider;
     btn.dataset.category = item.category;
-    btn.innerHTML = '<pre class="text-lg text-[var(--text-primary)] whitespace-pre-wrap break-all select-all font-sans leading-relaxed">' + item.divider + '</pre><div class="flex justify-between items-center mt-2"><span class="text-[10px] text-[var(--text-secondary)]">' + item.categoryName + '</span><span class="text-xs text-brand-500 dark:text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">Click to copy</span></div>';
+    btn.innerHTML = '<pre class="text-lg text-[var(--text-primary)] whitespace-pre-wrap break-all select-all font-sans leading-relaxed">' + item.divider + '</pre><div class="flex justify-between items-center mt-2"><span class="text-[10px] text-[var(--text-secondary)]">' + item.categoryName + '</span><span class="text-xs text-brand-500 dark:text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity" data-i18n="clickToCopy">Click to copy</span></div>';
     return btn;
   }
 

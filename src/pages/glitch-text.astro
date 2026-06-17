@@ -57,11 +57,11 @@ const levelsForClient = intensityLevels;
     <!-- Result -->
     <div id="result-card" class="tool-card">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-sm font-medium text-[var(--text-secondary)]">Glitched Text</span>
-        <button id="regenerate-btn" class="text-xs text-brand-500 hover:text-brand-600 dark:text-brand-400 transition-colors">↻ Regenerate</button>
+        <span class="text-sm font-medium text-[var(--text-secondary)]" data-i18n="glitch.glitchedText">Glitched Text</span>
+        <button id="regenerate-btn" class="text-xs text-brand-500 hover:text-brand-600 dark:text-brand-400 transition-colors" data-i18n="glitch.regenerate">↻ Regenerate</button>
       </div>
-      <div id="result-text" class="text-xl min-h-[3rem] break-all leading-relaxed text-[var(--text-primary)] overflow-hidden" style="line-height: 2.5;">Start typing to see glitch effects</div>
-      <button id="copy-btn" class="btn-copy mt-3" disabled>Copy</button>
+      <div id="result-text" class="text-xl min-h-[3rem] break-all leading-relaxed text-[var(--text-primary)] overflow-hidden" style="line-height: 2.5;" data-i18n="glitch.startTyping">Start typing to see glitch effects</div>
+      <button id="copy-btn" class="btn-copy mt-3" disabled data-i18n="copy">Copy</button>
     </div>
   </div>
 </ToolLayout>
@@ -101,6 +101,7 @@ const levelsForClient = intensityLevels;
   function updateResult() {
     if (!input.value) {
       resultText.textContent = 'Start typing to see glitch effects';
+      resultText.setAttribute('data-i18n', 'glitch.startTyping');
       copyBtn.disabled = true;
       return;
     }

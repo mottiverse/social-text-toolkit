@@ -32,12 +32,12 @@ import { upsideDownMap } from '../data/upside-down.js';
     <!-- Result -->
     <div id="result-card" class="tool-card">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-sm font-medium text-[var(--text-secondary)]">Flipped Text</span>
+        <span class="text-sm font-medium text-[var(--text-secondary)]" data-i18n="upsideDown.flippedText">Flipped Text</span>
       </div>
       <div id="result-text" class="text-xl min-h-[2rem] break-all leading-relaxed select-all text-[var(--text-primary)]">uʍop ǝpısdn</div>
       <div class="flex gap-2 mt-3">
-        <button id="copy-btn" class="btn-copy" disabled>Copy</button>
-        <button id="flip-back-btn" class="px-3 py-1.5 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-brand-500 hover:border-brand-300 dark:hover:border-brand-600 transition-all">Flip Back</button>
+        <button id="copy-btn" class="btn-copy" disabled data-i18n="copy">Copy</button>
+        <button id="flip-back-btn" class="px-3 py-1.5 rounded-lg text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-brand-500 hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-i18n="upsideDown.flipBack">Flip Back</button>
       </div>
     </div>
   </div>

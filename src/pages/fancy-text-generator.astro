@@ -154,6 +154,11 @@ const fontsForClient = fontList.map(f => ({
       showMoreContainer.classList.toggle('hidden', showAll);
       showMoreBtn.textContent = showAll ? 'Show less' : 'Show all ' + fonts.length + ' styles';
       showMoreBtn.setAttribute('data-i18n', showAll ? 'fancyText.showLess' : 'fancyText.showAll');
+      // Re-apply translation since we overwrote textContent
+      if (window.applyTranslations && window.getLanguage && window.getLanguage() === 'zh' && window.__translations) {
+        const key = showAll ? 'fancyText.showLess' : 'fancyText.showAll';
+        if (window.__translations[key]) showMoreBtn.textContent = window.__translations[key];
+      }
     }
   }
 

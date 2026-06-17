@@ -102,7 +102,7 @@ import { platforms } from '../data/platforms.js';
     platformLimits.classList.toggle('hidden', !keyword);
 
     if (!keyword) {
-      results.innerHTML = '<p class="text-[var(--text-secondary)] text-center py-8">Enter a keyword to generate username ideas</p>';
+      results.innerHTML = '<p class="text-[var(--text-secondary)] text-center py-8" data-i18n="username.startTyping">Enter a keyword to generate username ideas</p>';
       updateLimits(0);
       return;
     }
@@ -120,7 +120,7 @@ import { platforms } from '../data/platforms.js';
           '<span class="text-xs text-[var(--text-secondary)] ml-2">' + v.label + '</span>' +
           '<span class="text-xs text-[var(--text-secondary)] ml-1">(' + totalLen + ' chars)</span>' +
         '</div>' +
-        '<button class="btn-copy shrink-0" data-copy-text="' + v.text.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">Copy</button>' +
+        '<button class="btn-copy shrink-0" data-copy-text="' + v.text.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '" data-i18n="copy">Copy</button>' +
       '</div>';
     }
 

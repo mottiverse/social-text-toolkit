@@ -53,7 +53,7 @@ const stylesForClient = smallTextStyles.map(s => ({ id: s.id, name: s.name, icon
 
   function renderResults(text) {
     if (!text) {
-      results.innerHTML = '<p class="text-[var(--text-secondary)] text-center py-8">Start typing above to see small text styles</p>';
+      results.innerHTML = '<p class="text-[var(--text-secondary)] text-center py-8" data-i18n="smallText.startTyping">Start typing above to see small text styles</p>';
       return;
     }
 
@@ -67,7 +67,7 @@ const stylesForClient = smallTextStyles.map(s => ({ id: s.id, name: s.name, icon
           '<span class="text-sm font-medium text-[var(--text-secondary)]">' + style.name + ' <span class="text-xs text-[var(--text-secondary)] opacity-60">' + style.icon + '</span></span>' +
         '</div>' +
         '<div class="text-xl mb-3 break-all leading-relaxed select-all">' + converted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' +
-        '<button class="btn-copy" data-copy-text="' + converted.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">Copy</button>' +
+        '<button class="btn-copy" data-copy-text="' + converted.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '" data-i18n="copy">Copy</button>' +
       '</div>';
     }
 

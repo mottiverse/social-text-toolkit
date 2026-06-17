@@ -78,14 +78,14 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
       const btn = document.createElement('button');
       btn.className = 'tool-card text-center py-4 hover:border-brand-300 dark:hover:border-brand-600 group relative';
       btn.dataset.copy = kao;
-      btn.innerHTML = '<span class="text-xl block mb-1">' + kao + '</span><span class="text-xs text-[var(--text-secondary)] opacity-0 group-hover:opacity-100 transition-opacity">Click to copy</span>' +
+      btn.innerHTML = '<span class="text-xl block mb-1">' + kao + '</span><span class="text-xs text-[var(--text-secondary)] opacity-0 group-hover:opacity-100 transition-opacity" data-i18n="clickToCopy">Click to copy</span>' +
         '<span class="absolute top-2 right-2 text-sm cursor-pointer hover:scale-125 transition-transform" data-fav="' + kao.replace(/"/g, '&quot;') + '" title="Toggle favorite">⭐</span>';
       fragment.appendChild(btn);
     }
     grid.appendChild(fragment);
 
     if (!fragment.children.length) {
-      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8">No kaomoji found</p>';
+      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8" data-i18n="noResults">No kaomoji found</p>';
     }
   }
 

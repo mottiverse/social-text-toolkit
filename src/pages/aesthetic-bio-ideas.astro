@@ -82,6 +82,7 @@ const categoriesJson = JSON.stringify(bioCategories);
       const copyBtn = document.createElement('button');
       copyBtn.className = 'text-xs px-3 py-1.5 rounded-lg bg-brand-500 text-white hover:bg-brand-600 dark:bg-brand-400 dark:text-gray-900 dark:hover:bg-brand-300 transition-all';
       copyBtn.textContent = 'Copy Bio';
+      copyBtn.setAttribute('data-i18n', 'copyBio');
       copyBtn.dataset.copy = bio;
 
       const favBtn = document.createElement('button');

@@ -27,7 +27,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
   <section class="px-4 pb-4">
   <!-- Batch mode toggle and platform filter row -->
   <div class="flex flex-wrap items-center gap-2 pb-3">
-    <button id="batch-mode-btn" class="px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all">
+    <button id="batch-mode-btn" class="px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-i18n="symbols.batchSelect">
       ☐ Batch Select
     </button>
       <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all" data-platform="all" data-i18n="symbols.all">All</button>
@@ -59,7 +59,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
   <section class="px-4 pb-8">
     <div id="symbol-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-2">
     </div>
-    <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden">No symbols found</p>
+    <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden" data-i18n="noResults">No symbols found</p>
   </section>
 
   <!-- Batch selection bar -->
@@ -204,6 +204,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
   function updateBatchUI() {
     const count = selectedSymbols.size;
     batchCount.textContent = count + ' selected';
+    batchCount.setAttribute('data-i18n', 'symbols.selectedCount');
     batchCopyBtn.disabled = count === 0;
     batchBar.classList.toggle('hidden', !batchMode || count === 0);
     symbolGrid.classList.toggle('cursor-pointer', !batchMode);
@@ -216,6 +217,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
     batchModeBtn.classList.toggle('dark:bg-brand-400', batchMode);
     batchModeBtn.classList.toggle('dark:text-gray-900', batchMode);
     batchModeBtn.textContent = batchMode ? '☑ Batch Mode On' : '☐ Batch Select';
+    batchModeBtn.setAttribute('data-i18n', batchMode ? 'symbols.batchModeOn' : 'symbols.batchSelect');
     if (!batchMode) { selectedSymbols.clear(); }
     updateBatchUI();
   });

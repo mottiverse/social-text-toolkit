@@ -147,7 +147,7 @@ const categoriesJson = JSON.stringify(filteredCategories.map(c => ({
     }
     grid.appendChild(fragment);
     if (!fragment.children.length) {
-      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8 text-sm">No symbols found</p>';
+      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8 text-sm" data-i18n="noResults">No symbols found</p>';
     }
   }
 

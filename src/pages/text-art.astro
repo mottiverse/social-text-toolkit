@@ -89,6 +89,7 @@ const categoriesJson = JSON.stringify(textArtCategories);
       const copyBtn = document.createElement('button');
       copyBtn.className = 'text-xs px-3 py-1.5 rounded-lg bg-brand-500 text-white hover:bg-brand-600 dark:bg-brand-400 dark:text-gray-900 dark:hover:bg-brand-300 transition-all';
       copyBtn.textContent = 'Copy';
+      copyBtn.setAttribute('data-i18n', 'copy');
       copyBtn.dataset.copy = art;
 
       const favBtn = document.createElement('button');
@@ -107,7 +108,7 @@ const categoriesJson = JSON.stringify(textArtCategories);
     grid.appendChild(fragment);
 
     if (!fragment.children.length) {
-      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8">No ASCII art found</p>';
+      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8" data-i18n="noResults">No ASCII art found</p>';
     }
   }
 
