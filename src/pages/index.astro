@@ -10,13 +10,13 @@ const popularCategories = symbolCategories.slice(0, 4);
 <BaseLayout title="Social Text Toolkit" description="Free online text generator, symbol library, invisible characters, kaomoji &amp; bio decorations for social media creators. Create aesthetic profiles on Instagram, TikTok, Discord.">
   <!-- Hero Section -->
   <section class="px-4 pt-8 pb-6 text-center">
-    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3" data-i18n="home.title">
       Social Text Toolkit
     </h1>
-    <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-xl mx-auto mb-6">
+    <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-xl mx-auto mb-6" data-i18n="home.subtitle">
       Make your social profiles stand out with fancy text, symbols &amp; decorations.
     </p>
-    <p class="text-sm text-[var(--text-secondary)] max-w-2xl mx-auto mb-6 leading-relaxed">
+    <p class="text-sm text-[var(--text-secondary)] max-w-2xl mx-auto mb-6 leading-relaxed" data-i18n="home.description">
       A free, privacy-first collection of online text tools for social media creators. Generate fancy Unicode fonts, browse 1000+ copy-paste symbols, explore Japanese kaomoji emoticons, and preview your bio across Instagram, TikTok, Discord, and more — all in one place, with no ads and no tracking.
     </p>
     <div class="max-w-md mx-auto flex gap-2">
@@ -24,11 +24,13 @@ const popularCategories = symbolCategories.slice(0, 4);
         id="hero-search"
         type="text"
         placeholder="Search tools, symbols, kaomoji..."
+        data-i18n-placeholder="home.searchPlaceholder"
         class="flex-1 px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all"
       />
       <button
         id="hero-search-btn"
         class="px-5 py-3 rounded-xl bg-brand-500 text-white font-medium hover:bg-brand-600 active:scale-95 dark:bg-brand-400 dark:text-gray-900 dark:hover:bg-brand-300 transition-all"
+        data-i18n="home.searchBtn"
       >
         Go
       </button>
@@ -38,50 +40,62 @@ const popularCategories = symbolCategories.slice(0, 4);
 
   <!-- Popular Tools -->
   <section class="px-4 pb-8">
-    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Popular Tools</h2>
+    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4" data-i18n="home.popularTools">Popular Tools</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
       <ToolCard
         href="/fancy-text-generator"
         title="Fancy Text Generator"
         description="30+ Unicode font styles"
         icon="✨"
+        i18nTitle="tool.fancyText"
+        i18nDesc="tool.fancyTextDesc"
       />
       <ToolCard
         href="/symbols"
         title="Symbol Library"
         description="1000+ aesthetic symbols"
         icon="💎"
+        i18nTitle="tool.symbolLibrary"
+        i18nDesc="tool.symbolLibraryDesc"
       />
       <ToolCard
         href="/kaomoji"
         title="Kaomoji Collection"
         description="500+ Japanese emoticons"
         icon="(◕‿◕)"
+        i18nTitle="tool.kaomoji"
+        i18nDesc="tool.kaomojiDesc"
       />
       <ToolCard
         href="/text-dividers"
         title="Text Dividers"
         description="200+ bio dividers"
         icon="─── ✦ ───"
+        i18nTitle="tool.textDividers"
+        i18nDesc="tool.textDividersDesc"
       />
       <ToolCard
         href="/invisible-character"
         title="Invisible Characters"
         description="13 types explained"
         icon="⠀"
+        i18nTitle="tool.invisibleChar"
+        i18nDesc="tool.invisibleCharDesc"
       />
       <ToolCard
         href="/bio-preview"
         title="Bio Preview Tool"
         description="Multi-platform preview"
         icon="📱"
+        i18nTitle="tool.bioPreview"
+        i18nDesc="tool.bioPreviewDesc"
       />
     </div>
   </section>
 
   <!-- Popular Symbols -->
   <section class="px-4 pb-8">
-    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Popular Symbols</h2>
+    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4" data-i18n="home.popularSymbols">Popular Symbols</h2>
     <div class="space-y-4">
       {popularCategories.map((cat) => (
         <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
@@ -108,43 +122,43 @@ const popularCategories = symbolCategories.slice(0, 4);
 
   <!-- How It Works -->
   <section class="px-4 pb-8">
-    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">How It Works</h2>
+    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4" data-i18n="home.howItWorks">How It Works</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-center">
         <div class="text-3xl mb-2">1️⃣</div>
-        <h3 class="font-semibold text-[var(--text-primary)] mb-1">Type your text</h3>
-        <p class="text-sm text-[var(--text-secondary)]">Enter any text in the input field.</p>
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1" data-i18n="home.step1">Type your text</h3>
+        <p class="text-sm text-[var(--text-secondary)]" data-i18n="home.step1desc">Enter any text in the input field.</p>
       </div>
       <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-center">
         <div class="text-3xl mb-2">2️⃣</div>
-        <h3 class="font-semibold text-[var(--text-primary)] mb-1">Choose a style</h3>
-        <p class="text-sm text-[var(--text-secondary)]">Browse fonts, symbols, or decorations.</p>
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1" data-i18n="home.step2">Choose a style</h3>
+        <p class="text-sm text-[var(--text-secondary)]" data-i18n="home.step2desc">Browse fonts, symbols, or decorations.</p>
       </div>
       <div class="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-center">
         <div class="text-3xl mb-2">3️⃣</div>
-        <h3 class="font-semibold text-[var(--text-primary)] mb-1">Copy &amp; paste</h3>
-        <p class="text-sm text-[var(--text-secondary)]">Click to copy and use anywhere.</p>
+        <h3 class="font-semibold text-[var(--text-primary)] mb-1" data-i18n="home.step3">Copy &amp; paste</h3>
+        <p class="text-sm text-[var(--text-secondary)]" data-i18n="home.step3desc">Click to copy and use anywhere.</p>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
   <section class="px-4 pb-8">
-    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Frequently Asked Questions</h2>
+    <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4" data-i18n="home.faq">Frequently Asked Questions</h2>
     <div class="space-y-2">
       {[
-        { q: 'Does fancy text work on all platforms?', a: 'Most Unicode text styles work on Instagram, TikTok, Discord, Twitter, and other major platforms. Some niche fonts may not render correctly on LinkedIn.' },
-        { q: 'Are the generated characters really Unicode?', a: 'Yes! All our fancy text styles use standard Unicode characters, not custom fonts. This means they work in any app that supports Unicode.' },
-        { q: 'Can I use these symbols in my username?', a: 'Some platforms allow Unicode in usernames, but many restrict it to standard characters. It depends on the platform\'s policies.' },
-        { q: 'What are invisible characters used for?', a: 'Invisible characters can be used to create blank display names, add hidden spacing in bios, or format text in creative ways.' },
-        { q: 'Is this tool free to use?', a: 'Yes, Social Text Toolkit is completely free with no sign-up required. All processing happens in your browser.' },
+        { q: 'Does fancy text work on all platforms?', a: 'Most Unicode text styles work on Instagram, TikTok, Discord, Twitter, and other major platforms. Some niche fonts may not render correctly on LinkedIn.', i18nQ: 'home.faq1q', i18nA: 'home.faq1a' },
+        { q: 'Are the generated characters really Unicode?', a: 'Yes! All our fancy text styles use standard Unicode characters, not custom fonts. This means they work in any app that supports Unicode.', i18nQ: 'home.faq2q', i18nA: 'home.faq2a' },
+        { q: 'Can I use these symbols in my username?', a: 'Some platforms allow Unicode in usernames, but many restrict it to standard characters. It depends on the platform\'s policies.', i18nQ: 'home.faq3q', i18nA: 'home.faq3a' },
+        { q: 'What are invisible characters used for?', a: 'Invisible characters can be used to create blank display names, add hidden spacing in bios, or format text in creative ways.', i18nQ: 'home.faq4q', i18nA: 'home.faq4a' },
+        { q: 'Is this tool free to use?', a: 'Yes, Social Text Toolkit is completely free with no sign-up required. All processing happens in your browser.', i18nQ: 'home.faq5q', i18nA: 'home.faq5a' },
       ].map((item) => (
         <details class="group rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] overflow-hidden">
           <summary class="px-4 py-3 cursor-pointer font-medium text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors flex justify-between items-center">
-            <span>{item.q}</span>
+            <span data-i18n={item.i18nQ}>{item.q}</span>
             <svg class="w-4 h-4 text-[var(--text-secondary)] transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </summary>
-          <p class="px-4 pb-3 text-sm text-[var(--text-secondary)]">{item.a}</p>
+          <p class="px-4 pb-3 text-sm text-[var(--text-secondary)]" data-i18n={item.i18nA}>{item.a}</p>
         </details>
       ))}
     </div>
