@@ -184,7 +184,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
     searchTimer = setTimeout(() => applyFilters(), 50);
   });
 
-  setupCategoryTabs('.tab-btn', (category) => {
+  window.setupCategoryTabs('.tab-btn', (category) => {
     activeCategory = category;
     applyFilters();
   });

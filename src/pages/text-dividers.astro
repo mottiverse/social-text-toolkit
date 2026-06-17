@@ -103,7 +103,7 @@ const categoriesJson = JSON.stringify(dividerCategories);
     }
   });
 
-  setupCategoryTabs('.tab-btn', (category) => {
+  window.setupCategoryTabs('.tab-btn', (category) => {
     activeCategory = category;
     applyFilters();
   });

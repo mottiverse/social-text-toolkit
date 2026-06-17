@@ -110,7 +110,7 @@ const categoriesJson = JSON.stringify(lennyFaceCategories);
   // Search
   searchInput.addEventListener('input', () => renderCategory(activeCategory));
 
-  setupCategoryTabs('.lenny-tab', (category) => {
+  window.setupCategoryTabs('.lenny-tab', (category) => {
     activeCategory = category;
     searchInput.value = '';
     renderCategory(category);

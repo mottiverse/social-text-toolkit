@@ -109,7 +109,7 @@ const categoriesJson = JSON.stringify(kaomojiCategories);
   // Search
   searchInput.addEventListener('input', () => renderCategory(activeCategory));
 
-  setupCategoryTabs('.kao-tab', (category) => {
+  window.setupCategoryTabs('.kao-tab', (category) => {
     activeCategory = category;
     searchInput.value = '';
     renderCategory(category);

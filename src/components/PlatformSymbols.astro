@@ -160,7 +160,7 @@ const categoriesJson = JSON.stringify(filteredCategories.map(c => ({
 
   searchInput.addEventListener('input', () => renderCategory(activeCategory));
 
-  setupCategoryTabs('.platform-tab', (category) => {
+  window.setupCategoryTabs('.platform-tab', (category) => {
     activeCategory = category;
     searchInput.value = '';
     renderCategory(category);

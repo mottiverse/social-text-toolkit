@@ -132,7 +132,7 @@ const categoriesJson = JSON.stringify(textArtCategories);
   // Search
   searchInput.addEventListener('input', () => renderCategory(activeCategory));
 
-  setupCategoryTabs('.textart-tab', (category) => {
+  window.setupCategoryTabs('.textart-tab', (category) => {
     activeCategory = category;
     searchInput.value = '';
     renderCategory(category);

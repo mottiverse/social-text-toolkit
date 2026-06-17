@@ -110,7 +110,7 @@ const categoriesJson = JSON.stringify(emojiComboCategories);
   // Search
   searchInput.addEventListener('input', () => renderCategory(activeCategory));
 
-  setupCategoryTabs('.combo-tab', (category) => {
+  window.setupCategoryTabs('.combo-tab', (category) => {
     activeCategory = category;
     searchInput.value = '';
     renderCategory(category);
