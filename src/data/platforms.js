@@ -42,4 +42,11 @@ export const fontCompatibility = {
   'strikethrough': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
   'underline': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
   'zalgo': { instagram: 'limited', tiktok: 'limited', discord: 'full', twitter: 'limited', linkedin: 'limited', youtube: 'limited' },
+  'regional-indicator': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'acute': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'diaeresis': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'tilde': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'circumflex': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'grave': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
+  'dot-above': { instagram: 'full', tiktok: 'full', discord: 'full', twitter: 'full', linkedin: 'full', youtube: 'full' },
 };
