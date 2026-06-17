@@ -1,0 +1,140 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import { textArtCategories } from '../data/text-art.js';
+
+const categoriesJson = JSON.stringify(textArtCategories);
+---
+
+<ToolLayout title="ASCII Text Art" description="Copy-paste ASCII text art and text pictures. Animals, faces, hearts, objects, banners &amp; more. Perfect for social media bios, chat messages, and online profiles.">
+  <div slot="tool">
+    <!-- Platform Compatibility -->
+    <div class="mb-6 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">Platform Compatibility</h3>
+      <div class="flex flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Instagram</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ TikTok</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Discord</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Twitter/X</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">⚠ SMS</span>
+      </div>
+      <p class="text-xs text-[var(--text-secondary)] mt-2">ASCII art uses standard text characters and works everywhere. On mobile, art may wrap if the screen is too narrow — use a monospace font for best results. Click any art to copy it instantly.</p>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-6">
+      <div class="relative">
+        <input
+          id="textart-search"
+          type="text"
+          placeholder="Search ASCII art..."
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 text-sm transition-all"
+        />
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div id="textart-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide">
+      {textArtCategories.map((cat, i) => (
+        <button
+          class:list={[
+            'textart-tab shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all whitespace-nowrap',
+            i === 0
+              ? 'bg-brand-500 text-white border-brand-500 dark:bg-brand-400 dark:text-gray-900'
+              : 'border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600',
+          ]}
+          data-category={cat.id}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >
+          {cat.icon} {cat.name}
+        </button>
+      ))}
+    </div>
+
+    <!-- Art Grid -->
+    <div id="textart-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    </div>
+  </div>
+</ToolLayout>
+
+<script is:inline src="/scripts/tabs.js"></script>
+<script define:vars={{ categoriesJson }}>
+  const categories = JSON.parse(categoriesJson);
+  const grid = document.getElementById('textart-grid');
+  const searchInput = document.getElementById('textart-search');
+  let activeCategory = categories[0]?.id || 'animals';
+
+  function renderCategory(catId) {
+    const cat = categories.find(c => c.id === catId);
+    if (!cat) return;
+    const query = searchInput.value.toLowerCase().trim();
+
+    grid.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    for (const art of cat.art) {
+      if (query && !art.toLowerCase().includes(query)) continue;
+
+      const card = document.createElement('div');
+      card.className = 'tool-card p-4 group relative flex flex-col';
+
+      const pre = document.createElement('pre');
+      pre.className = 'text-xs leading-tight text-[var(--text-primary)] whitespace-pre font-mono overflow-x-auto mb-2 flex-1';
+      pre.textContent = art;
+
+      const actions = document.createElement('div');
+      actions.className = 'flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'text-xs px-3 py-1.5 rounded-lg bg-brand-500 text-white hover:bg-brand-600 dark:bg-brand-400 dark:text-gray-900 dark:hover:bg-brand-300 transition-all';
+      copyBtn.textContent = 'Copy';
+      copyBtn.dataset.copy = art;
+
+      const favBtn = document.createElement('button');
+      favBtn.className = 'text-sm cursor-pointer hover:scale-125 transition-transform';
+      favBtn.textContent = '⭐';
+      favBtn.dataset.fav = art;
+      favBtn.title = 'Toggle favorite';
+
+      actions.appendChild(copyBtn);
+      actions.appendChild(favBtn);
+
+      card.appendChild(pre);
+      card.appendChild(actions);
+      fragment.appendChild(card);
+    }
+    grid.appendChild(fragment);
+
+    if (!fragment.children.length) {
+      grid.innerHTML = '<p class="col-span-full text-center text-[var(--text-secondary)] py-8">No ASCII art found</p>';
+    }
+  }
+
+  // Event delegation for copy and favorites
+  grid.addEventListener('click', (e) => {
+    const favBtn = e.target.closest('[data-fav]');
+    if (favBtn) {
+      e.stopPropagation();
+      if (window.toggleFavorite) {
+        const isFav = window.toggleFavorite(favBtn.getAttribute('data-fav'));
+        favBtn.textContent = isFav ? '🌟' : '⭐';
+      }
+      return;
+    }
+    const copyBtn = e.target.closest('[data-copy]');
+    if (copyBtn && window.copyToClipboard) {
+      window.copyToClipboard(copyBtn.dataset.copy);
+    }
+  });
+
+  // Search
+  searchInput.addEventListener('input', () => renderCategory(activeCategory));
+
+  setupCategoryTabs('.textart-tab', (category) => {
+    activeCategory = category;
+    searchInput.value = '';
+    renderCategory(category);
+  });
+
+  renderCategory(activeCategory);
+</script>
