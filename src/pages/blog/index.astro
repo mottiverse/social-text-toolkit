@@ -8,8 +8,8 @@ posts.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
 
 <BaseLayout title="Blog — Social Text Toolkit" description="Guides, tips, and tutorials about using fancy text generators, aesthetic symbols, kaomoji, invisible characters, and more for your social media profiles.">
   <div class="mx-auto max-w-3xl px-4 py-12">
-    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-2">Blog</h1>
-    <p class="text-[var(--text-secondary)] mb-8">Guides, tips, and tutorials for making your social profiles stand out.</p>
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-2" data-i18n="blog.heading">Blog</h1>
+    <p class="text-[var(--text-secondary)] mb-8" data-i18n="blog.subtitle">Guides, tips, and tutorials for making your social profiles stand out.</p>
 
     <div class="space-y-4">
       {posts.map((post) => (
@@ -41,7 +41,7 @@ posts.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
     </div>
 
     {posts.length === 0 && (
-      <p class="text-center text-[var(--text-secondary)] py-12">No blog posts yet. Check back soon!</p>
+      <p class="text-center text-[var(--text-secondary)] py-12" data-i18n="blog.empty">No blog posts yet. Check back soon!</p>
     )}
   </div>
 </BaseLayout>
