@@ -74,12 +74,24 @@ var observer = new MutationObserver(function (mutations) {
   });
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+function startObserver() {
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+if (document.body) {
+  startObserver();
+} else {
+  document.addEventListener('DOMContentLoaded', startObserver);
+}
 
 // Apply translations on DOM ready if language is not English
-document.addEventListener('DOMContentLoaded', function () {
+function applyInitialTranslations() {
   var lang = window.getLanguage();
   if (lang !== 'en') {
     applyTranslations(lang);
   }
-});
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyInitialTranslations);
+} else {
+  applyInitialTranslations();
+}
