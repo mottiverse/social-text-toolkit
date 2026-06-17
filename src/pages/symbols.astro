@@ -9,6 +9,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
   title="Symbol Library"
   description="Browse and copy 1000+ aesthetic symbols for your social media bios, captions, and messages. Hearts, stars, arrows, flowers, and more."
 >
+  <div slot="tool">
   <!-- Search Bar -->
   <section class="px-4 pb-4">
     <div class="relative">
@@ -74,6 +75,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
     </select>
     <button id="batch-copy-btn" class="btn-copy text-xs" disabled>Copy All</button>
     <button id="batch-clear-btn" class="px-2 py-1 rounded-lg text-xs text-[var(--text-secondary)] hover:text-red-500 transition-colors">Clear</button>
+  </div>
   </div>
 </ToolLayout>
 

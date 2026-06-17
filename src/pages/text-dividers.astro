@@ -9,6 +9,7 @@ const categoriesJson = JSON.stringify(dividerCategories);
   title="Text Dividers"
   description="Browse and copy 200+ decorative text dividers for your social media bios. Minimal, decorative, stars, floral, and fancy styles."
 >
+  <div slot="tool">
   <!-- Category Tabs -->
   <section class="px-4 pb-4">
     <div class="mb-4 p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
@@ -44,6 +45,7 @@ const categoriesJson = JSON.stringify(dividerCategories);
     </div>
     <p id="no-results" class="text-center text-[var(--text-secondary)] py-8 hidden" data-i18n="noResults">No dividers found</p>
   </section>
+  </div>
 </ToolLayout>
 
 <script is:inline src="/scripts/tabs.js"></script>
