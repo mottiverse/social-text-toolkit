@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+
+<BaseLayout title="Blog — Social Text Toolkit" description="Guides, tips, and tutorials about using fancy text generators, aesthetic symbols, kaomoji, invisible characters, and more for your social media profiles.">
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-2">Blog</h1>
+    <p class="text-[var(--text-secondary)] mb-8">Guides, tips, and tutorials for making your social profiles stand out.</p>
+
+    <div class="space-y-4">
+      {posts.map((post) => (
+        <a
+          href={`/blog/${post.slug}`}
+          class="block p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-brand-300 dark:hover:border-brand-600 transition-all group"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-[var(--text-primary)] group-hover:text-brand-500 dark:group-hover:text-brand-400 mb-1 transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="text-sm text-[var(--text-secondary)] line-clamp-2 mb-2">
+                {post.data.description}
+              </p>
+              <div class="flex items-center gap-3 text-xs text-[var(--text-secondary)]">
+                <span>{new Date(post.data.publishDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                {post.data.category && (
+                  <span class="px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 text-xs">{post.data.category}</span>
+                )}
+                {post.data.tags?.slice(0, 2).map(tag => (
+                  <span class="text-[var(--text-secondary)]/60">#{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {posts.length === 0 && (
+      <p class="text-center text-[var(--text-secondary)] py-12">No blog posts yet. Check back soon!</p>
+    )}
+  </div>
+</BaseLayout>
