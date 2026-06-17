@@ -118,9 +118,13 @@ export const translations = {
   // === Fancy Text Generator ===
   'fancyText.title': { en: 'Fancy Text Generator', zh: '花式文字生成器' },
   'fancyText.desc': { en: 'Transform plain text into 30+ beautiful Unicode font styles. Copy-paste fancy text for Instagram, TikTok, Discord, and more. Real-time preview with platform compatibility labels.', zh: '将普通文字转换为 30+ 种精美 Unicode 字体风格。一键复制花式文字到 Instagram、TikTok、Discord 等平台。实时预览，附带平台兼容标签。' },
+  'fancyText.enterText': { en: 'Enter your text', zh: '输入文字' },
   'fancyText.placeholder': { en: 'Type your text here...', zh: '在此输入文字...' },
   'fancyText.charCount': { en: 'chars', zh: '字符' },
   'fancyText.compatNote': { en: 'Compatibility shown for each style. Green = full support, Yellow = partial, Red = limited. Tested on latest platform versions.', zh: '每种风格显示兼容性。绿色 = 完全支持，黄色 = 部分支持，红色 = 有限支持。基于各平台最新版本测试。' },
+  'fancyText.startTyping': { en: 'Start typing above to see fancy text styles', zh: '在上方输入文字查看花式文字风格' },
+  'fancyText.showAll': { en: 'Show all styles', zh: '显示全部风格' },
+  'fancyText.showLess': { en: 'Show less', zh: '收起' },
   'fancyText.faq1q': { en: 'How does a fancy text generator work?', zh: '花式文字生成器如何工作？' },
   'fancyText.faq1a': { en: 'It replaces each character in your text with a stylized Unicode equivalent. For example, "A" becomes "𝓐" in script style. All output uses real Unicode characters, not custom fonts.', zh: '它将你文字中的每个字符替换为风格化的 Unicode 等价字符。例如，"A" 变成 "𝓐"。所有输出使用真实的 Unicode 字符，而非自定义字体。' },
   'fancyText.faq2q': { en: 'Will fancy text work on Instagram?', zh: '花式文字在 Instagram 上能用吗？' },
@@ -131,6 +135,7 @@ export const translations = {
   'symbols.desc': { en: '1000+ aesthetic symbols for your social media bio. Hearts, stars, arrows, math symbols & more. Search, filter by category, one-click copy.', zh: '1000+ 美学符号供你的社交媒体 Bio 使用。爱心、星星、箭头、数学符号等。搜索、按分类筛选、一键复制。' },
   'symbols.searchPlaceholder': { en: 'Search symbols...', zh: '搜索符号...' },
   'symbols.all': { en: 'All', zh: '全部' },
+  'symbols.platformNote': { en: 'All symbols use standard Unicode and work on all platforms. Some emoji rendering may differ by platform.', zh: '所有符号使用标准 Unicode，在所有平台上均可使用。部分 Emoji 渲染可能因平台而异。' },
 
   // === Kaomoji Page ===
   'kaomoji.title': { en: 'Kaomoji Collection', zh: '颜文字合集' },
@@ -142,6 +147,7 @@ export const translations = {
   'dividers.title': { en: 'Text Dividers', zh: '文本分隔符' },
   'dividers.desc': { en: '200+ decorative text dividers for bio formatting. Cute, minimalist, floral, sparkle styles. Perfect for Instagram, TikTok, Discord.', zh: '200+ 装饰性文本分隔符，用于 Bio 排版。可爱、极简、花卉、星光风格。完美适配 Instagram、TikTok、Discord。' },
   'dividers.searchPlaceholder': { en: 'Search dividers...', zh: '搜索分隔符...' },
+  'dividers.compatNote': { en: 'Text dividers use Unicode box-drawing and decorative characters. They render correctly on all major social platforms. Some multi-line dividers may appear differently on mobile.', zh: '文本分隔符使用 Unicode 制表符和装饰字符。在所有主流社交平台上均可正常渲染。部分多行分隔符在手机上可能显示不同。' },
 
   // === Invisible Character ===
   'invisible.title': { en: 'Invisible Character', zh: '不可见字符' },
@@ -149,7 +155,8 @@ export const translations = {
 
   // === Bio Preview ===
   'bioPreview.title': { en: 'Bio Preview Tool', zh: 'Bio 预览工具' },
-  'bioPreview.desc': { en: 'Preview your social media bio across Instagram, TikTok, and Discord. See how your decorated text looks before publishing. Check character limits.', zh: '在 Instagram、TikTok 和 Discord 上预览你的社交媒体 Bio。发布前查看装饰文字效果。检查字符限制。' },
+  'bioPreview.yourBio': { en: 'Your Bio', zh: '你的 Bio' },
+  'bioPreview.preview': { en: 'Preview', zh: '预览' },
 
   // === Small Text ===
   'smallText.title': { en: 'Small Text Generator', zh: '小字生成器' },
@@ -162,14 +169,19 @@ export const translations = {
   // === Glitch Text ===
   'glitch.title': { en: 'Glitch / Zalgo Text Generator', zh: '故障 / Zalgo 文字生成器' },
   'glitch.desc': { en: 'Create creepy, glitchy Zalgo text with adjustable intensity. Perfect for horror themes, gaming, and creative effects.', zh: '创建恐怖、故障风格的 Zalgo 文字，可调节强度。适合恐怖主题、游戏和创意效果。' },
+  'glitch.compatNote': { en: 'Zalgo text works best on Discord. Heavy and Extreme levels may display incorrectly on most platforms. Twitter/X strips combining marks entirely.', zh: 'Zalgo 文字在 Discord 上效果最佳。高强度和极强级别在大多数平台上可能显示异常。Twitter/X 会完全移除组合标记。' },
 
   // === Username Generator ===
   'username.title': { en: 'Username Generator', zh: '用户名生成器' },
   'username.desc': { en: 'Generate aesthetic usernames from keywords. Platform character limit checking for Instagram, TikTok, Discord & more.', zh: '从关键词生成美学用户名。检查 Instagram、TikTok、Discord 等平台字符限制。' },
+  'username.enterKeyword': { en: 'Enter a keyword', zh: '输入关键词' },
+  'username.placeholder': { en: 'e.g. starlight, cosmic, shadow...', zh: '例如 starlight, cosmic, shadow...' },
 
   // === Text to Image ===
   'textToImage.title': { en: 'Text to Image', zh: '文字转图片' },
   'textToImage.desc': { en: 'Convert text to styled images. Instagram Story (1080×1920), Xiaohongshu (1080×1440), Twitter Card (1200×675) templates.', zh: '将文字转换为风格化图片。预设 Instagram Story (1080×1920)、小红书 (1080×1440)、Twitter Card (1200×675) 模板。' },
+  'textToImage.yourText': { en: 'Your text', zh: '你的文字' },
+  'textToImage.placeholder': { en: 'Enter text to render...', zh: '输入要渲染的文字...' },
 
   // === ASCII Text Art ===
   'textArt.title': { en: 'ASCII Text Art', zh: 'ASCII 文字画' },
@@ -200,6 +212,7 @@ export const translations = {
   'instaBio.tip2': { en: 'Line breaks are supported — use dividers to separate sections.', zh: '支持换行 — 使用分隔符区分不同区域。' },
   'instaBio.tip3': { en: 'All Unicode symbols work on Instagram. Fancy fonts may display differently.', zh: '所有 Unicode 符号均支持 Instagram。花式字体显示效果可能有所不同。' },
   'instaBio.tip4': { en: 'Start with a catchy line, add symbols for personality, end with a CTA.', zh: '以吸引人的句子开头，添加符号展现个性，以行动号召结尾。' },
+  'instaBio.tipsHeading': { en: 'Instagram Bio Tips', zh: 'Instagram Bio 技巧' },
   'instaBio.searchPlaceholder': { en: 'Search Instagram bio symbols...', zh: '搜索 Instagram Bio 符号...' },
 
   'tiktokBio.title': { en: 'TikTok Bio Symbols', zh: 'TikTok Bio 符号' },
@@ -210,6 +223,7 @@ export const translations = {
   'tiktokBio.tip2': { en: 'Only one clickable link is allowed in your TikTok bio.', zh: 'TikTok Bio 中仅允许一个可点击链接。' },
   'tiktokBio.tip3': { en: 'Symbols and emojis help your bio stand out in a crowded feed.', zh: '符号和 Emoji 帮助你的 Bio 在拥挤的信息流中脱颖而出。' },
   'tiktokBio.tip4': { en: 'Use arrows and hearts to draw attention to your link.', zh: '使用箭头和爱心吸引用户点击你的链接。' },
+  'tiktokBio.tipsHeading': { en: 'TikTok Bio Tips', zh: 'TikTok Bio 技巧' },
   'tiktokBio.searchPlaceholder': { en: 'Search TikTok bio symbols...', zh: '搜索 TikTok Bio 符号...' },
 
   'discordBio.title': { en: 'Discord Bio Symbols', zh: 'Discord Bio 符号' },
@@ -220,6 +234,7 @@ export const translations = {
   'discordBio.tip2': { en: 'Discord "About Me" section allows up to 190 characters.', zh: 'Discord "关于我" 区域最多允许 190 个字符。' },
   'discordBio.tip3': { en: 'All Unicode symbols work in Discord names and bios.', zh: '所有 Unicode 符号均支持 Discord 名称和 Bio。' },
   'discordBio.tip4': { en: 'Use dividers and decorative symbols to organize your server profile.', zh: '使用分隔符和装饰符号整理你的服务器资料。' },
+  'discordBio.tipsHeading': { en: 'Discord Bio Tips', zh: 'Discord Bio 技巧' },
   'discordBio.searchPlaceholder': { en: 'Search Discord bio symbols...', zh: '搜索 Discord Bio 符号...' },
 
   // === Aesthetic Bio Ideas ===

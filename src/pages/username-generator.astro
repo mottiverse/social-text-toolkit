@@ -9,11 +9,12 @@ import { platforms } from '../data/platforms.js';
 >
   <div slot="tool">
     <div class="mb-6">
-      <label for="keyword-input" class="block text-sm font-medium mb-2">Enter a keyword</label>
+      <label for="keyword-input" class="block text-sm font-medium mb-2" data-i18n="username.enterKeyword">Enter a keyword</label>
       <input
         id="keyword-input"
         type="text"
         placeholder="e.g. starlight, cosmic, shadow..."
+        data-i18n-placeholder="username.placeholder"
         class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all text-lg"
         maxlength="30"
       />

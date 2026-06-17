@@ -9,14 +9,14 @@ const categoriesJson = JSON.stringify(bioCategories);
   <div slot="tool">
     <!-- Platform Compatibility -->
     <div class="mb-6 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
-      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">Platform Compatibility</h3>
+      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2" data-i18n="compatibility">Platform Compatibility</h3>
       <div class="flex flex-wrap gap-2 text-xs">
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Instagram</span>
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ TikTok</span>
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Discord</span>
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">✓ Twitter/X</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" data-i18n="platform.instagram">✓ Instagram</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" data-i18n="platform.tiktok">✓ TikTok</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" data-i18n="platform.discord">✓ Discord</span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" data-i18n="platform.twitter">✓ Twitter/X</span>
       </div>
-      <p class="text-xs text-[var(--text-secondary)] mt-2">All bio templates are text-based and work on every platform. Click any bio to copy it, then paste directly into your profile. Mix and match lines to create your own unique bio!</p>
+      <p class="text-xs text-[var(--text-secondary)] mt-2" data-i18n="aestheticBio.compatNote">All bio templates are text-based and work on every platform. Click any bio to copy it, then paste directly into your profile. Mix and match lines to create your own unique bio!</p>
     </div>
 
     <!-- Category Tabs -->
@@ -44,13 +44,13 @@ const categoriesJson = JSON.stringify(bioCategories);
 
     <!-- Tips -->
     <div class="mt-8 p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
-      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">Bio Writing Tips</h3>
+      <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2" data-i18n="aestheticBio.tips">Bio Writing Tips</h3>
       <ul class="text-xs text-[var(--text-secondary)] space-y-1.5 list-disc pl-4">
-        <li>Keep it under the character limit: Instagram 150, TikTok 80, Discord 190.</li>
-        <li>Use line breaks (press Enter) to organize different sections of your bio.</li>
-        <li>Mix text with symbols, emojis, and dividers for visual appeal.</li>
-        <li>Add a call-to-action (CTA) like a link or "DM for collabs" at the end.</li>
-        <li>Update your bio regularly to keep it fresh and relevant.</li>
+        <li data-i18n="aestheticBio.tip1">Keep it under the character limit: Instagram 150, TikTok 80, Discord 190.</li>
+        <li data-i18n="aestheticBio.tip2">Use line breaks (press Enter) to organize different sections of your bio.</li>
+        <li data-i18n="aestheticBio.tip3">Mix text with symbols, emojis, and dividers for visual appeal.</li>
+        <li data-i18n="aestheticBio.tip4">Add a call-to-action (CTA) like a link or "DM for collabs" at the end.</li>
+        <li data-i18n="aestheticBio.tip5">Update your bio regularly to keep it fresh and relevant.</li>
       </ul>
     </div>
   </div>

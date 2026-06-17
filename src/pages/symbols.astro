@@ -16,6 +16,7 @@ const categoriesJson = JSON.stringify(symbolCategories);
         id="search-input"
         type="text"
         placeholder="Search symbols..."
+        data-i18n-placeholder="symbols.searchPlaceholder"
         class="w-full pl-10 pr-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-brand-500 dark:focus:ring-brand-400 transition-all"
       />
       <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -29,20 +30,20 @@ const categoriesJson = JSON.stringify(symbolCategories);
     <button id="batch-mode-btn" class="px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all">
       ☐ Batch Select
     </button>
-      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all" data-platform="all">All</button>
-      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="ig">📸 IG</button>
-      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="tt">🎵 TikTok</button>
-      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="dc">💬 Discord</button>
-      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="x">𝕏 X</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all" data-platform="all" data-i18n="symbols.all">All</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="ig" data-i18n="platform.instagram">📸 IG</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="tt" data-i18n="platform.tiktok">🎵 TikTok</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="dc" data-i18n="platform.discord">💬 Discord</button>
+      <button class="platform-filter-btn whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 dark:hover:border-brand-600 transition-all" data-platform="x" data-i18n="platform.twitter">𝕏 X</button>
     </div>
-    <p id="platform-note" class="text-[11px] text-[var(--text-secondary)] mt-1 hidden">All symbols use standard Unicode and work on all platforms. Some emoji rendering may differ by platform.</p>
+    <p id="platform-note" class="text-[11px] text-[var(--text-secondary)] mt-1 hidden" data-i18n="symbols.platformNote">All symbols use standard Unicode and work on all platforms. Some emoji rendering may differ by platform.</p>
     <div id="category-tabs" role="tablist" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide mt-1">
       <button
         class="tab-btn active whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-brand-500 text-white dark:bg-brand-400 dark:text-gray-900 transition-all"
         data-category="all"
         role="tab"
         aria-selected="true"
-      >All</button>
+      data-i18n="cat.all">All</button>
       {symbolCategories.map((cat) => (
         <button
           class="tab-btn whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-brand-300 hover:text-brand-500 dark:hover:border-brand-600 dark:hover:text-brand-400 transition-all"
